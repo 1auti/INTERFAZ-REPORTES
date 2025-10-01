@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+    <style src="/pages/home/home.css" />
+
+    <div width="100%" viewModel="@id('vm') @init('home.home')" sclass="home-container">
+        <!-- Cards Grid -->
+        <div sclass="cards-grid">
+
+            <!-- Card: Carga de Excel -->
+            <div sclass="menu-card success-card" onClick="@command('navigateLoadExcel')">
+                <div sclass="card-icon-wrapper success">
+                    <n:i class="fas fa-file-excel card-icon"></n:i>
+                </div>
+                <div sclass="card-content">
+                    <n:h3 class="card-title">Importar Excel</n:h3>
+                    <n:p class="card-description">Importación y procesado de Lotes desde archivo Excel</n:p>
+                </div>
+                <div sclass="card-footer">
+                    <n:span class="card-action">Cargar Lote<n:i class="fas fa-arrow-right"></n:i></n:span>
+                </div>
+            </div>
+
+            <!-- Card: Lotes -->
+            <div sclass="menu-card warning-card" onClick="@command('navigateBatch')">
+                <div sclass="card-icon-wrapper warning">
+                    <n:i class="fas fa-boxes card-icon"></n:i>
+                </div>
+                <div sclass="card-content">
+                    <n:h3 class="card-title">Lotes</n:h3>
+                    <n:p class="card-description">Gestión y procesamiento de lotes de datos</n:p>
+                </div>
+                <div sclass="card-footer">
+                    <n:span class="card-action">Ver lotes <n:i class="fas fa-arrow-right"></n:i></n:span>
+                </div>
+            </div>
+
+            <!-- Card: Tipo Vehiculo -->
+            <div sclass="menu-card primary-card" onClick="@command('navigateTypeVehicle')">
+                <div sclass="card-icon-wrapper primary">
+                    <n:i class="fas fa-car card-icon"></n:i>
+                </div>
+                <div sclass="card-content">
+                    <n:h3 class="card-title">Tipo Vehículo</n:h3>
+                    <n:p class="card-description">Configuración de tipos de vehículos </n:p>
+                </div>
+                <div sclass="card-footer">
+                    <n:span class="card-action">Configurar <n:i class="fas fa-arrow-right"></n:i></n:span>
+                </div>
+            </div>
+
+            <!-- Card: Reglas -->
+            <div sclass="menu-card secondary-card" onClick="@command('navigateRules')">
+                <div sclass="card-icon-wrapper secondary">
+                    <n:i class="fas fa-cogs card-icon"></n:i>
+                </div>
+                <div sclass="card-content">
+                    <n:h3 class="card-title">Reglas</n:h3>
+                    <n:p class="card-description">Gestión de rules de negocio y validaciones</n:p>
+                </div>
+                <div sclass="card-footer">
+                    <n:span class="card-action">Gestionar <n:i class="fas fa-arrow-right"></n:i></n:span>
+                </div>
+            </div>
+
+            <!-- Card: Mapeo -->
+            <div sclass="menu-card info-card" onClick="@command('navigateMapeo')">
+                <div sclass="card-icon-wrapper info">
+                    <n:i class="fas fa-map card-icon"></n:i>
+                </div>
+                <div sclass="card-content">
+                    <n:h3 class="card-title">Mapeo de Datos</n:h3>
+                    <n:p class="card-description">Configuración de mapeos y relaciones de datos</n:p>
+                </div>
+                <div sclass="card-footer">
+                    <n:span class="card-action">Configurar <n:i class="fas fa-arrow-right"></n:i></n:span>
+                </div>
+            </div>
+
+            <!-- Card: Historial -->
+            <div sclass="menu-card dark-card" onClick="@command('navigateHistory')">
+                <div sclass="card-icon-wrapper dark">
+                    <n:i class="fas fa-history card-icon"></n:i>
+                </div>
+                <div sclass="card-content">
+                    <n:h3 class="card-title">Historial Actividades</n:h3>
+                    <n:p class="card-description">Consulta de registros y datos de actividades</n:p>
+                </div>
+                <div sclass="card-footer">
+                    <n:span class="card-action">Ver Actividades <n:i class="fas fa-arrow-right"></n:i></n:span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</zk>

@@ -1,0 +1,11 @@
+<zk xmlns:n="native">
+    <bs-row>
+        <n:div sclass="col px-1 py-1 text-center">
+            <n:span class="z-label lead text-muted">
+                <n:i class="fas fa-tools mr-2"></n:i>
+                En Construcción
+                <n:i class="fas fa-hard-hat ml-2"></n:i>
+            </n:span>
+        </n:div>
+    </bs-row>
+</zk>

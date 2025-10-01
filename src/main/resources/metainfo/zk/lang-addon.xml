@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language-addon>
+    <addon-name>admin-addon</addon-name>
+    <version>1.0</version>
+    <language-name>xul/html</language-name>
+
+    <javascript src="/js/bs-row.js" />
+
+    <!-- Componente bs-row -->
+    <component>
+        <component-name>bs-row</component-name>
+        <component-class>org.zkoss.zhtml.Div</component-class>
+        <extends>div</extends>
+        <property>
+            <property-name>sclass</property-name>
+            <property-value>row py-1</property-value>
+            <property-implementation>_sclass</property-implementation>
+        </property>
+    </component>
+
+    <!-- Otros componentes en un formato simple -->
+    <component>
+        <component-name>state-box</component-name>
+        <component-class>org.zkoss.zhtml.Div</component-class>
+        <extends>div</extends>
+    </component>
+
+    <component>
+        <component-name>info-box</component-name>
+        <component-class>org.zkoss.zhtml.Div</component-class>
+        <extends>div</extends>
+    </component>
+</language-addon>

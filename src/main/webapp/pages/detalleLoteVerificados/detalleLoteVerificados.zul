@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+    <style src="/pages/detalleLoteVerificados/detalleLoteVerificados.css" />
+
+    <div sclass="lote-container" width="100%" height="100%" viewModel="@id('vm') @init('detalleLoteVerificados.detalleLoteVerificados')">
+
+        <!-- Header Controls -->
+        <div sclass="lote-header">
+            <!-- Title with back button -->
+            <div sclass="header-left">
+                <!-- Botón para volver al detalle de lote -->
+                <button sclass="btn-back" onClick="@command('volverADetalleLote')"
+                        iconSclass="fa fa-arrow-left" label="Volver"
+                        tooltiptext="Volver al detalle de lote" />
+
+                <!-- Título dinámico -->
+                <label sclass="page-title" value="@load(vm.tituloDetalle)" />
+            </div>
+
+            <!-- Search and Actions -->
+            <div sclass="header-right">
+                <div sclass="search-container">
+                    <n:i class="fas fa-search search-icon"></n:i>
+                    <textbox sclass="search-input" placeholder="Buscar por dominio o persona"
+                             value="@bind(vm.searchText)" onOK="@command('search')" />
+                </div>
+                <button sclass="btn-subir" onClick="@command('importarExcel')" iconSclass="fa fa-upload" label="Importar Excel" />
+                <button sclass="btn-export" onClick="@command('exportarExcel')" iconSclass="fa fa-file-excel" label="Exportar Excel" />
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div sclass="filter-controls">
+            <div sclass="filter-group">
+                <label value="Filtrar por estado:" />
+                <combobox sclass="filter-combo" model="@load(vm.estadoFilterOptions)"
+                          selectedItem="@bind(vm.selectedEstadoFilter)"
+                          onSelect="@command('filterByEstado')">
+                    <template name="model">
+                        <comboitem label="@load(each.label)" value="@load(each.value)" />
+                    </template>
+                </combobox>
+            </div>
+
+            <!-- Filtro adicional por fecha de verificación -->
+            <div sclass="filter-group">
+                <label value="Fecha verificación desde:" />
+                <datebox sclass="filter-date" value="@bind(vm.fechaVerificacionDesde)"
+                         onChange="@command('filterByFecha')" format="dd/MM/yyyy" />
+            </div>
+
+            <div sclass="filter-group">
+                <label value="hasta:" />
+                <datebox sclass="filter-date" value="@bind(vm.fechaVerificacionHasta)"
+                         onChange="@command('filterByFecha')" format="dd/MM/yyyy" />
+            </div>
+
+            <button sclass="btn-clear-filters" onClick="@command('clearFilters')" iconSclass="fa fa-broom" label="Limpiar Filtros" />
+        </div>
+
+        <!-- Data Grid -->
+        <div sclass="grid-container">
+            <grid model="@load(vm.dominialesList)"
+                  emptyMessage="No hay dominios verificados para mostrar"
+                  width="100%"
+                  sclass="data-grid compact-grid"
+                  mold="paging"
+                  pageSize="15">
+
+                <!-- Columns Definition -->
+                <columns sizable="true" sclass="grid-header">
+                    <column label="Dominio" width="10%" align="center" sort="auto(dominio)" />
+                    <column label="Estado" width="8%" align="center" sort="auto(estado)" />
+                    <column label="DNI" width="9%" align="center" sort="auto(persona.dni)" />
+                    <column label="Nombre" width="11%" align="center" sort="auto(persona.nombre)" />
+                    <column label="Apellido" width="11%" align="center" sort="auto(persona.apellido)" />
+                    <column label="Email" width="14%" align="center" />
+                    <column label="Marca" width="7%" align="center" />
+                    <column label="Modelo" width="7%" align="center" />
+                    <column label="Fecha Verificación" width="10%" align="center" sort="auto(fechaTramite)" />
+                    <column label="Usuario Verificador" width="8%" align="center" />
+                    <column label="Acciones" width="8%" align="center" />
+                </columns>
+
+                <!-- Data Rows Template -->
+                <template name="model" var="dominial">
+                    <row sclass="grid-row">
+                        <!-- Dominio -->
+                        <div>
+                            <label value="@load(dominial.dominio)" sclass="dominio-text-verificado" />
+                        </div>
+
+                        <!-- Estado -->
+                        <div>
+                            <label value="@load(dominial.estado.name())"
+                                   sclass="@load(vm.getEstadoClass(dominial.estado))" />
+                        </div>
+
+                        <!-- DNI -->
+                        <div>
+                            <label value="@load(dominial.persona.dni)" />
+                        </div>
+
+                        <!-- Nombre -->
+                        <div>
+                            <label value="@load(dominial.persona.nombre)" />
+                        </div>
+
+                        <!-- Apellido -->
+                        <div>
+                            <label value="@load(dominial.persona.apellido)" />
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label value="@load(dominial.persona.contacto.mail)"
+                                   sclass="email-text"
+                                   tooltiptext="@load(dominial.persona.contacto.mail)" />
+                        </div>
+
+                        <!-- Marca del Vehículo -->
+                        <div>
+                            <label value="@load(dominial.persona.vehiculo.marca)"
+                                   sclass="marca-text"
+                                   tooltiptext="@load(dominial.persona.vehiculo.tipoVehiculo)" />
+                        </div>
+
+                        <!-- Modelo del Vehículo -->
+                        <div>
+                            <label value="@load(dominial.persona.vehiculo.modelo)"
+                                   sclass="modelo-text" />
+                        </div>
+
+                        <!-- Fecha de Verificación -->
+                        <div>
+                            <label value="@load(vm.formatearFecha(dominial.fechaTramite))"
+                                   sclass="fecha-verificacion-text" />
+                        </div>
+
+                        <!-- Usuario Verificador -->
+                        <div>
+                            <label value="@load(dominial.persona.nombre)"
+                                   sclass="usuario-verificador-text"
+                                   tooltiptext="@load(dominial.persona.nombre)" />
+                        </div>
+
+                        <!-- Acciones -->
+                        <div sclass="action-buttons">
+                            <button sclass="btn-view" onClick="@command('verDetalleDominio', dominio=dominial)"
+                                    iconSclass="fas fa-eye" tooltiptext="Ver detalle" />
+                            <button sclass="btn-edit" onClick="@command('editarDominio', dominio=dominial)"
+                                    iconSclass="fas fa-edit" tooltiptext="Editar" />
+                            <button sclass="btn-history" onClick="@command('verHistorialDominio', dominio=dominial)"
+                                    iconSclass="fas fa-history" tooltiptext="Ver historial" />
+                        </div>
+                    </row>
+                </template>
+            </grid>
+        </div>
+
+        <!-- Footer con estadísticas -->
+        <div sclass="footer-info">
+            <div sclass="summary-info">
+                <label value="@load(vm.totalDominiosText)" />
+                <separator orient="vertical" />
+                <label value="@load(vm.verificadosText)" />
+                <separator orient="vertical" />
+                <label value="@load(vm.pendientesText)" />
+                <separator orient="vertical" />
+                <label value="@load(vm.rechazadosText)" />
+                <separator orient="vertical" />
+                <label value="@load(vm.ultimaActualizacionText)" />
+            </div>
+            <div sclass="pagination-info">
+                <label value="@load(vm.paginationText)" />
+            </div>
+        </div>
+    </div>
+</zk>

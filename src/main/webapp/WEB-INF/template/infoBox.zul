@@ -1,0 +1,33 @@
+<zk xmlns="native">
+    <!-- Contenedor principal con clase de color dinámico -->
+    <div class="infoBox rounded p-2 shadow-sm ${color}">
+        <!-- Fila de título -->
+        <div class="row mx-1 mb-2">
+            <span class="z-label text-muted small font-weight-bold">
+                ${each.title}
+            </span>
+        </div>
+
+        <!-- Fila de contenido principal -->
+        <div class="row mx-1">
+            <!-- Número de elementos incompletos -->
+            <div class="col-12 h3 text-center font-weight-bold mb-1">
+                ${each.incompleted}
+            </div>
+
+            <!-- Tema o descripción -->
+            <div class="col-12 text-center text-secondary mb-2">
+                ${each.topic}
+            </div>
+        </div>
+
+        <!-- Fila de pie con información de completado -->
+        <div class="row mx-1 pt-2 border-top">
+            <div class="col-12 text-center">
+                <span class="z-label text-muted small">
+                    Completed: ${each.completed}
+                </span>
+            </div>
+        </div>
+    </div>
+</zk>

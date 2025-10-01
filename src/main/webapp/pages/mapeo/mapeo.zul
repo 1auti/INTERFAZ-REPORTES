@@ -1,0 +1,110 @@
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+    <style src="/pages/mapeo/mapeo.css" />
+
+    <div sclass="lote-container" width="100%" height="100%" viewModel="@id('vm') @init('mapeo.mapeo')">
+
+        <!-- Header Principal -->
+        <div sclass="lote-header">
+            <div sclass="header-left">
+                <label sclass="page-title" value="Mapeo" />
+            </div>
+            <div sclass="header-right">
+                <div sclass="search-container">
+                    <n:i class="fas fa-search search-icon"></n:i>
+                    <textbox sclass="search-input" placeholder="Buscar por dato clave"
+                             value="@bind(vm.searchText)" onOK="@command('search')" />
+                </div>
+                <button sclass="btn-new" onClick="@command('newMapeo')" iconSclass="fa fa-plus" label="Crear Mapeo" />
+                <button sclass="btn-export" onClick="@command('export')" iconSclass="fa fa-file-excel" label="Exportar" />
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div sclass="filter-controls">
+            <div sclass="filter-group">
+                <label value="Filtrar por columna:" />
+                <combobox sclass="filter-combo" model="@load(vm.columnaFilterOptions)"
+                          selectedItem="@bind(vm.selectedColumnaFilter)"
+                          onSelect="@command('filterByColumna')">
+                    <template name="model">
+                        <comboitem label="@load(each.label)" value="@load(each.value)" />
+                    </template>
+                </combobox>
+            </div>
+            <div sclass="filter-group">
+                <label value="Creador:" />
+                <combobox sclass="filter-combo" model="@load(vm.creadorFilterOptions)"
+                          selectedItem="@bind(vm.selectedCreadorFilter)"
+                          onSelect="@command('filterByCreador')">
+                    <template name="model">
+                        <comboitem label="@load(each.label)" value="@load(each.value)" />
+                    </template>
+                </combobox>
+            </div>
+            <button sclass="btn-clear-filters" onClick="@command('clearFilters')" iconSclass="fa fa-broom" label="Limpiar Filtros" />
+        </div>
+
+        <!-- Data Grid -->
+        <div sclass="grid-container">
+            <grid model="@load(vm.mapeoList)"
+                  emptyMessage="No hay mapeos para mostrar"
+                  width="100%"
+                  sclass="data-grid compact-grid"
+                  mold="paging"
+                  pageSize="10">
+
+                <!-- Columns Definition -->
+                <columns sizable="true" sclass="grid-header">
+                    <column label="DATO CLAVE" width="15%" align="center" sort="auto(datoClave)" />
+                    <column label="REEMPLAZO" width="35%" align="center" />
+                    <column label="COLUMNA" width="12%" align="center" sort="auto(columna)" />
+                    <column label="CREADOR" width="10%" align="center" sort="auto(creador)" />
+                    <column label="FECHA-HORA" width="18%" align="center" sort="auto(fechaCreacion)" />
+                    <column label="ACCIONES" width="10%" align="center" />
+                </columns>
+
+                <!-- Data Rows Template -->
+                <template name="model" var="mapeo">
+                    <row sclass="grid-row">
+                        <!-- Dato Clave -->
+                        <div>
+                            <label value="@load(mapeo.datoClave)" />
+                        </div>
+
+                        <!-- Reemplazo (badges con valores múltiples) -->
+                        <div>
+                            <div sclass="reemplazo-container">
+                                <div forEach="@load(mapeo.reemplazos)" sclass="reemplazo-badges">
+                                    <label sclass="badge-reemplazo" value="@load(each)" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Columna -->
+                        <div>
+                            <label value="@load(mapeo.columna)" />
+                        </div>
+
+                        <!-- Creador -->
+                        <div>
+                            <label value="@load(mapeo.creador)" />
+                        </div>
+
+                        <!-- Fecha Creación -->
+                        <div>
+                            <label value="@load(mapeo.fechaCreacion) @converter('formatedDate', format='yyyy-MM-dd HH:mm:ss')" />
+                        </div>
+
+                        <!-- Acciones -->
+                        <div sclass="action-buttons">
+                            <button sclass="btn-edit" onClick="@command('editMapeo', mapeo=mapeo)"
+                                    iconSclass="fas fa-edit" tooltiptext="Editar" />
+                            <button sclass="btn-delete" onClick="@command('deleteMapeo', mapeo=mapeo)"
+                                    iconSclass="fas fa-trash" tooltiptext="Eliminar" />
+                        </div>
+                    </row>
+                </template>
+            </grid>
+        </div>
+    </div>
+</zk>

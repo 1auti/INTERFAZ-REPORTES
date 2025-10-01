@@ -1,0 +1,242 @@
+/* === SIDEBAR === */
+.sidebar {
+    color: #ffffff; /* Cambio de #050505 a blanco */
+    height: 100%;
+    min-height: 100vh;
+    min-width: 230px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: all 0.3s ease;
+    overflow-y: auto;
+
+     /** Oscuro a claro */
+    /*background-color: #444746;*/
+    /*background-color: #313233;*/
+    background-color: #38393B;
+    /*background-color: #2B2C2F;*/
+
+    padding: 20px 0px 0px 10px;
+    box-shadow: 4px 0px 12px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 4px 0px 12px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 4px 0px 12px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 957px) {
+    .sidebar {
+        min-width: 45px;
+    }
+
+    .z-navbar-vertical {
+        max-width: 100%;
+    }
+}
+
+/* Sidebar toggle button */
+.sidebar-toggle {
+    position: fixed;
+    left: 12px;
+    top: 12px;
+    z-index: 100;
+    color: #ffffff; /* Cambio de #050505 a blanco */
+    border: none;
+    padding: 4px 8px;
+    border-radius: 3px;
+}
+
+
+.user-logo {
+    padding: 20px 0;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.user-logo .rounded {
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    animation: floating 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.user-logo:hover .rounded {
+    transform: translateY(-6px);
+    animation-play-state: paused;
+}
+
+.user-logo::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    filter: blur(2px);
+    z-index: -1;
+    animation: shadow-floating 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.user-logo img {
+    background: transparent !important;
+    mix-blend-mode: screen;
+    filter: invert(1) contrast(1.2) brightness(1.1);
+}
+
+/* Menu container */
+.sidebar .menu-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-center;
+    align-items: center;
+    min-height: auto;
+}
+
+/* Contenedores de menú */
+.menu-item {
+    width: 100%;
+    height: 100%;
+}
+
+/* Estilos unificados para menús y submenús */
+.menu-item div, .submenu .menu-item {
+    padding: 10px 4px 10px 10px !important;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    color: #ffffff; /* Cambio de #050505 a blanco */
+    border-left: 3px solid transparent;
+    position: relative;
+}
+
+/* Contenedor de submenús */
+.submenu {
+    width: 100%;
+}
+
+/* Labels de menú */
+.menu-item .z-label, .menu-label-menu, .menu-label-sub {
+    font-size: 10px;
+    color: #ffffff; /* Asegurar que los labels sean blancos */
+}
+
+/* Estados hover y activo - aplicados tanto a menús como submenús */
+.menu-item div:hover, .submenu .menu-item:hover {
+    border-left: 4px solid #5da9ff; /* Azul más claro para fondo oscuro */
+    background-color: rgba(88, 166, 255, 0.1);
+    color: #ffffff; /* Mantener texto blanco en hover */
+}
+
+.menu-item.active div, .submenu .menu-item.active {
+    border-left: 4px solid #5da9ff; /* Azul más claro para fondo oscuro */
+    /*background-color: rgba(88, 166, 255, 0.15); */
+    background-color: rgba(88, 166, 255, 0.1);
+    color: #ffffff; /* Mantener texto blanco cuando activo */
+}
+
+/* Iconos - mismo estilo para menús y submenús */
+.menu-item .icon, .submenu .menu-item .icon {
+    color: #d1d5db; /* Cambio de #555555 a gris claro */
+    margin-right: 8px;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+/* Títulos de menú */
+.menu-title {
+    padding: 1px 4px;
+    color: #d1d5db; /* Cambio de #555555 a gris claro */
+    margin: 8px 0px 0px 0px;
+}
+
+.menu-title .z-label {
+    font-weight: bolder;
+    font-size: 12px;
+    color: #d1d5db; /* Asegurar que el título sea gris claro */
+}
+
+/* Icono chevron */
+.chevron-icon {
+    height: 100%;
+    position: absolute;
+    right: 12px;
+    top: 4px;
+    margin-left: auto;
+    margin-top: 8px;
+    color: #d1d5db; /* Cambio de #555555 a gris claro */
+    font-size: 9px !important;
+    transition: transform 0.3s ease;
+}
+
+.menu-item.expanded .chevron-icon {
+    transform: rotate(90deg);
+}
+
+/* Título de interfaz */
+.interfaz-title {
+    padding-right: 10px;
+    color: #d1d5db; /* Cambio de #555555 a gris claro */
+}
+
+.interfaz-title .z-label {
+    font-size: 10px !important;
+    font-weight: 400;
+    color: #d1d5db; /* Asegurar que el título de interfaz sea gris claro */
+}
+
+/* Animaciones */
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes shadow-floating {
+    0%, 100% {
+        transform: translateX(-50%) scaleX(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateX(-50%) scaleX(0.85);
+        opacity: 0.4;
+    }
+}
+
+/* Clases de iconos con colores específicos ajustados para fondo oscuro */
+.icon-menu-color {
+    font-size: 14px !important;
+    color: #5da9ff !important; /* Azul más claro para fondo oscuro */
+}
+
+.icon-submenu-color {
+    font-size: 14px !important;
+    color: #f85149 !important; /* Rojo más claro para fondo oscuro */
+}
+
+/* Scrollbar personalizada para el sidebar */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    /** Oscuro a claro */
+    /*background-color: #444746;*/
+    /*background-color: #313233;*/
+    background-color: #38393B;
+    /*background-color: #2B2C2F;*/
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #6b7280;
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}

@@ -1,0 +1,49 @@
+<zk xmlns:n="native" xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml">
+    <style src="/components/sidebar/sidebar.css" />
+
+    <div id="sidebar" sclass="sidebar" viewModel="@id('vm') @init('sidebar.sidebar')">
+        <div>
+            <div sclass="d-flex justify-content-center interfaz-title" width="100%">
+                <label value="@load(vm.interfazTitle)" />
+            </div>
+
+            <div height="170px" sclass="user-logo  mt-2" onClick="@command('onNavigate')">
+                <image src="/resources/image/logo.jpg" width="120px" sclass="rounded"/>
+            </div>
+
+            <div children="@load(vm.menuList)" style="padding-bottom: 80px;">
+                <template name="children" var="menu">
+                    <div if="${!empty menu.title}" sclass="menu-title">
+                        <label value="@load(menu.title)" />
+                    </div>
+
+                    <!--<div sclass="menu-item">
+                        <div sclass="menu" if="${!empty menu.subMenus}" onClick="@command('toggleMenu', menu=menu)">
+                            <n:span class="${menu.icon} icon"></n:span>
+                            <label sclass="menu-label-menu" value="@load(menu.label)" />
+                            <n:span class="fa fa-chevron-down chevron-icon"></n:span>
+                        </div>
+
+                        <div if="${empty menu.subMenus}" onClick="@command('navigate', menu=menu)">
+                            <n:span class="${menu.icon} icon"></n:span>
+                            <label value="@load(menu.label)" />
+                        </div>
+                    </div>
+-->
+                    <!-- SUBMENÚS - FUERA del menu-item principal -->
+                    <div sclass="submenu ${menu.expanded ? 'expanded' : ''}" visible="@load(menu.expanded)">
+                        <div children="@load(menu.subMenus)">
+                            <template name="children" var="submenu">
+                                <div sclass="menu-item ${vm.isMenuActive(submenu) ? 'active' : ''}" onClick="@command('navigate', menu=submenu)">
+                                    <n:span class="${submenu.icon} icon"></n:span>
+                                    <label sclass="menu-label-sub" value="@load(submenu.label)" />
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</zk>

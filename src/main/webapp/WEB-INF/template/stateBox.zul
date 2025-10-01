@@ -1,0 +1,27 @@
+<zk xmlns="native" xmlns:z="zul">
+    <!-- Contenedor de estado con color dinámico y efecto visual -->
+    <div class="state-box rounded p-2 shadow-sm ${color}">
+        <div class="row align-items-center">
+            <!-- Columna de información textual -->
+            <div class="col-8 px-3">
+                <!-- Tipo de estado con estilo sutil -->
+                <h6 class="text-muted mb-1 small">${state.type}</h6>
+
+                <!-- Valor principal destacado -->
+                <h4 class="font-weight-bold mb-2">${state.value}</h4>
+
+                <!-- Conversión de ratio a porcentaje con estilo -->
+                <z:label
+                        sclass="text-success font-weight-bold"
+                        value="@init(state.ratio)@converter('org.zkoss.dominial.zk_system.converter.PercentageConverter')"/>
+            </div>
+
+            <!-- Columna de ícono -->
+            <div class="col-4 text-right px-3">
+                <h2 class="mb-0">
+                    <i class="${icon} text-muted h2"/>
+                </h2>
+            </div>
+        </div>
+    </div>
+</zk>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+    <style src="/pages/detalleLote/detalleLote.css" />
+
+    <div sclass="lote-container" width="100%" height="100%" viewModel="@id('vm') @init('detalleLote.detalleLote')">
+
+        <!-- Header Controls -->
+        <div sclass="lote-header">
+            <!-- Title with back button -->
+            <div sclass="header-left">
+                <!-- Botón para volver atrás -->
+                <button sclass="btn-back" onClick="@command('volverALotes')"
+                        iconSclass="fa fa-arrow-left" label="Volver"
+                        tooltiptext="Volver a la lista de lotes" />
+
+                <!-- Título usando método del ViewModel -->
+                <label sclass="page-title" value="@load(vm.tituloDetalle)" />
+            </div>
+
+            <!-- Search and Actions -->
+            <div sclass="header-right">
+                <div sclass="search-container">
+                    <n:i class="fas fa-search search-icon"></n:i>
+                    <textbox sclass="search-input" placeholder="Buscar por archivo"
+                             value="@bind(vm.searchText)" onOK="@command('search')" />
+                </div>
+                <button sclass="btn-descargar" onClick="@command('bajarTodosExcel')" iconSclass="fa fa-download" label="Bajar" />
+                <button sclass="btn-subir" onClick="@command('subirExcel')" iconSclass="fa fa-upload" label="Subir" />
+                <button sclass="btn-reprocesar" onClick="@command('reprocesarSeleccionados')" iconSclass="fa fa-redo" label="Reprocesar" />
+                <button sclass="btn-reprocesar-todo" onClick="@command('reprocesarTodo')" iconSclass="fa fa-sync" label="Reprocesar Todo" />
+                <button sclass="btn-export" onClick="@command('exportToExcel')" iconSclass="fa fa-file-excel" label="Exportar" />
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div sclass="filter-controls">
+            <div sclass="filter-group">
+                <label value="Filtrar por estado:" />
+                <combobox sclass="filter-combo" model="@load(vm.estadoFilterOptions)"
+                          selectedItem="@bind(vm.selectedEstadoFilter)"
+                          onSelect="@command('filterByEstado')">
+                    <template name="model">
+                        <comboitem label="@load(each.label)" value="@load(each.value)" />
+                    </template>
+                </combobox>
+            </div>
+            <div sclass="filter-group">
+                <label value="Autor:" />
+                <combobox sclass="filter-combo" model="@load(vm.autorFilterOptions)"
+                          selectedItem="@bind(vm.selectedAutorFilter)"
+                          onSelect="@command('filterByAutor')">
+                    <template name="model">
+                        <comboitem label="@load(each.label)" value="@load(each.value)" />
+                    </template>
+                </combobox>
+            </div>
+            <div sclass="filter-group">
+                <label value="Fecha desde:" />
+                <datebox sclass="filter-date" value="@bind(vm.fechaDesde)"
+                         onChange="@command('filterByDate')" />
+            </div>
+            <div sclass="filter-group">
+                <label value="Fecha hasta:" />
+                <datebox sclass="filter-date" value="@bind(vm.fechaHasta)"
+                         onChange="@command('filterByDate')" />
+            </div>
+            <button sclass="btn-clear-filters" onClick="@command('clearFilters')" iconSclass="fa fa-broom" label="Limpiar Filtros" />
+        </div>
+
+        <!-- Data Grid -->
+        <div sclass="grid-container">
+            <grid model="@load(vm.detalleLoteList)"
+                  emptyMessage="No hay detalles de lote para mostrar"
+                  width="100%"
+                  sclass="data-grid compact-grid"
+                  mold="paging"
+                  pageSize="10">
+
+                <!-- Columns Definition -->
+                <columns sizable="true" sclass="grid-header">
+                    <column label="ID" width="8%" align="center" sort="auto(id)" />
+                    <column label="Nombre Archivo" width="25%" align="center" sort="auto(nombreArchivo)" />
+                    <column label="Verificados" width="10%" align="center" sort="auto(verificados)" />
+                    <column label="Rechazados" width="10%" align="center" sort="auto(rechazados)" />
+                    <column label="Estado" width="10%" align="center" sort="auto(estado)" />
+                    <column label="Fecha Alta" width="12%" align="center" sort="auto(fechaAlta)" />
+                    <column label="Autor" width="10%" align="center" sort="auto(autor)" />
+                    <column label="Acciones" width="15%" align="center" />
+                </columns>
+
+                <!-- Data Rows Template -->
+                <template name="model" var="detalle">
+                    <row sclass="grid-row">
+                        <!-- ID -->
+                        <div>
+                            <label value="@load(detalle.id)" />
+                        </div>
+
+                        <!-- Nombre del Archivo -->
+                        <div>
+                            <label value="@load(detalle.nombreArchivo)"
+                                   sclass="archivo-nombre"
+                                   tooltiptext="@load(detalle.nombreArchivo)" />
+                        </div>
+
+                        <!-- Verificados -->
+                        <div sclass="verificados-cell" onClick="@command('verVerificados')">
+                            <label value="@load(detalle.verificados)"
+                                   sclass="badge-verificados" />
+                        </div>
+
+                        <!-- Rechazados -->
+                        <div sclass="rechazados-cell" onClick="@command('verRechazados')">
+                            <label value="@load(detalle.rechazados)"
+                                   sclass="@load(detalle.rechazados > 0 ? 'badge-rechazados-warning' : 'badge-rechazados-ok')" />
+                        </div>
+
+                        <!-- Estado - CORREGIDO SIN CONCATENACIÓN -->
+                        <div>
+                            <label value="@load(detalle.estado)"
+                                   sclass="estado-badge" />
+                        </div>
+
+                        <!-- Fecha Alta -->
+                        <div>
+                            <label value="@load(detalle.fechaAlta) @converter('formatedDate', format='dd/MM/yyyy')" />
+                        </div>
+
+                        <!-- Autor -->
+                        <div>
+                            <label value="@load(detalle.autor)" />
+                        </div>
+
+                        <!-- Acciones -->
+                        <div sclass="action-buttons">
+                            <button sclass="btn-reprocesar" onClick="@command('reprocesar', detalle=detalle)"
+                                    iconSclass="fas fa-redo" tooltiptext="Reprocesar" />
+                            <button sclass="btn-subir" onClick="@command('subirExcelDetalle', detalle=detalle)"
+                                    iconSclass="fas fa-upload" tooltiptext="Subir Excel" />
+                            <button sclass="btn-descargar" onClick="@command('bajarExcel', detalle=detalle)"
+                                    iconSclass="fas fa-download" tooltiptext="Descargar Excel" />
+                        </div>
+                    </row>
+                </template>
+            </grid>
+        </div>
+
+        <!-- Footer con estadísticas -->
+        <div sclass="footer-info">
+            <div sclass="summary-info">
+                <label value="@load(vm.totalRegistrosText)" />
+                <separator orient="vertical" />
+                <label value="@load(vm.totalVerificadosText)" />
+                <separator orient="vertical" />
+                <label value="@load(vm.totalRechazadosText)" />
+                <separator orient="vertical" />
+                <label value="@load(vm.ultimaActualizacionText)" />
+            </div>
+            <div sclass="pagination-info">
+                <label value="@load(vm.paginationText)" />
+            </div>
+        </div>
+    </div>
+</zk>

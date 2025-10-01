@@ -1,0 +1,180 @@
+
+/* ===== BREADCRUMB/LOCATION ===== */
+.location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px !important;
+    color: #d1d5db;
+}
+
+
+.location .fa-house {
+    color: #5da9ff;
+    font-size: 12px;
+}
+
+.location .fa-angle-right {
+    color: #9ca3af;
+    font-size: 10px;
+}
+
+.location label, .location .z-label {
+    color: #d1d5db;
+    font-size: 13px !important;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+
+
+
+/* ===== ICONOS Y BADGES ===== */
+.icon-wrapper {
+    position: relative;
+    font-size: 18px; /* Aumentado de 14px */
+    color: #d1d5db;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background-color: rgba(88, 166, 255, 0.1);
+}
+
+.icon-wrapper:hover {
+    background-color: rgba(88, 166, 255, 0);
+    color: #ffffff;
+}
+
+.icon-wrapper .badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: #f85129;
+    color: #ffffff;
+    font-size: 10px; /* Reducido de 11px */
+    padding: 2px 5px;
+    border-radius: 50%;
+    font-weight: bold;
+    min-width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.icon-wrapper .badge.green {
+    background-color: #22c55e;
+}
+
+/* ===== USER INFO ===== */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Aumentado de 2px */
+    cursor: pointer;
+    font-size: 12px; /* Aumentado de 10px */
+    font-weight: 500;
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: rgba(88, 166, 255, 0.1);
+}
+
+.user-info:hover {
+    background-color: rgba(88, 166, 255, 0);
+}
+
+.user-info span {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.avatar {
+    width: 32px; /* Aumentado de 30px */
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #6b7280;
+    transition: border-color 0.3s ease;
+}
+
+.user-info:hover .avatar {
+    border-color: #9ca3af;
+}
+
+.arrow-down {
+    color: #d1d5db;
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+.user-info:hover .arrow-down {
+    transform: rotate(180deg);
+    color: #ffffff;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .location {
+        font-size: 10px;
+    }
+
+    .location .fa-house {
+        font-size: 12px;
+    }
+
+    .user-info {
+        font-size: 10px;
+        gap: 6px;
+    }
+
+    .user-info span {
+        display: none; /* Ocultar nombre en móvil */
+    }
+
+    .avatar {
+        width: 28px;
+        height: 28px;
+    }
+
+    .icon-wrapper {
+        font-size: 14px;
+        padding: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .location {
+        width: 100%;
+    }
+
+    .d-flex.justify-content-end {
+        width: 100%;
+        justify-content: space-between !important;
+    }
+}
+
+.home-location{
+    weight: bold;
+}
+
+.text-capitalize:hover,
+.now-location:hover{
+    color: #5da9ff;
+}
+
+.active{
+    color: #5da9ff !important;
+}

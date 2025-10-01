@@ -1,0 +1,33 @@
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+    <style src="/components/navbar/navbar.css" />
+
+    <div sclass="container d-flex justify-content-rounded align-items-center gap-4 px-4" width="100%" viewModel="@id('vm') @init('navbar.navbar')">
+        <div sclass="location d-flex justify-content-start align-items-center gap-3" width="100%">
+            <n:i sclass="fa fa-house"></n:i>
+            <label sclass="home-location text-capitalize" value="@bind(vm.title)" onClick="@command('navigationToHome')"/>
+            <n:i sclass="fa fa-angle-right"></n:i>
+            <label sclass="now-location text-capitalize active" value="@bind(vm.location)"/>
+        </div>
+
+        <!-- Notificaciones -->
+        <div sclass="d-flex justify-content-end align-items-center gap-4" width="100%">
+            <div sclass="icon-wrapper">
+                <n:i sclass="fa-solid fa-bell"></n:i>
+                <n:span sclass="badge">5</n:span>
+            </div>
+
+            <!-- Mensajes -->
+            <div sclass="icon-wrapper">
+                <n:i sclass="fa-solid fa-comment"></n:i>
+                <n:span sclass="badge green">3</n:span>
+            </div>
+
+            <!-- Usuario -->
+            <div sclass="user-info d-flex align-items-center gap-3">
+                <n:img src="https://i.pravatar.cc/40?img=11" sclass="avatar" />
+                <n:span>Administrador</n:span>
+                <n:i sclass="fa-solid fa-caret-down arrow-down"></n:i>
+            </div>
+        </div>
+    </div>
+</zk>

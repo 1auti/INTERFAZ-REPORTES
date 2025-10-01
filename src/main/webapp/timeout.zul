@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="sessionExpiredModal"
+            border="normal"
+            mode="modal"
+            position="center"
+            action="show: slideDown; hide: slideUp"
+            closable="false"
+            class="main"
+            width="400px"
+            style="border-radius: 4px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+
+        <style src="/resources/css/timeout.css"></style>
+
+
+        <div style="padding: 20px;">
+            <vbox spacing="20px" align="center" width="100%">
+                <image src="/images/warning-icon.png" width="48px" height="48px"
+                       style="display: none;" />
+
+                <label value="⚠️" style="font-size: 48px; color: #dc3545;"/>
+
+                <label value="Sesión Expirada"
+                       style="font-size: 24px; font-weight: bold; color: #dc3545; text-align: center;"/>
+
+                <vbox spacing="5px" align="center">
+                    <label value="Su sesión ha expirado por inactividad."
+                           style="font-size: 16px; color: #666; text-align: center;"/>
+                    <label value="Por favor, inicie sesión nuevamente."
+                           style="font-size: 16px; color: #666; text-align: center;"/>
+                </vbox>
+
+                <hbox spacing="10px" pack="center">
+                    <button label="Nueva Sesión"
+                            style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-size: 14px; cursor: pointer;">
+                        <attribute name="onClick">
+                            Executions.sendRedirect("/dashboard/");
+                        </attribute>
+                    </button>
+                </hbox>
+            </vbox>
+        </div>
+    </window>
+</zk>

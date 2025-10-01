@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns:n="native" xmlns="http://www.zkoss.org/2005/zul">
+    <style src="/pages/home/home.css" />
+
+    <hlayout width="100%" class="body">
+        <div sclass="sidebar" viewModel="@id('vm') @init('org.zkoss.dominial.dashboard.LoginVM')">
+
+            <div height="160px" sclass="user-logo text-center">
+                <image src="/resources/image/logo.jpg" width="120px" sclass="rounded" />
+            </div>
+
+            <div class="login-titulo">
+                <label style="font-size: 18px;" value="Acceso Radares" />
+            </div>
+
+            <div class="login-box">
+                <vlayout>
+                    <label value="Correo electrónico" />
+                    <textbox id="username" placeholder="ejemplo@gmail.com" />
+
+                    <label value="Contraseña" />
+                    <textbox id="password" placeholder="********" type="password" />
+
+                    <button label="Ingresar" onClick="doLogin()" />
+                </vlayout>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="title">
+                <label style="font-size: 28px; font-weight: bold;" value="Interfaz Radares" />
+            </div>
+            <image src="resources/image/backgroundLogin.png" />
+        </div>
+    </hlayout>
+</zk>
