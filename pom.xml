@@ -40,7 +40,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jetty.version>9.4.44.v20210927</jetty.version>
 		<zk.version>9.6.0</zk.version>
-		<start-class>org.zkoss.dominial.AdminApplication</start-class>
+		<start-class>org.zkoss.reporte.AdminApplication</start-class>
 	</properties>
 
 	<!-- REPOSITORIOS -->

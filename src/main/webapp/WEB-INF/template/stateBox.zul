@@ -13,7 +13,7 @@
                 <!-- Conversión de ratio a porcentaje con estilo -->
                 <z:label
                         sclass="text-success font-weight-bold"
-                        value="@init(state.ratio)@converter('org.zkoss.dominial.zk_system.converter.PercentageConverter')"/>
+                        value="@init(state.ratio)@converter('org.zkoss.reporte.zk_system.converter.PercentageConverter')"/>
             </div>
 
             <!-- Columna de ícono -->

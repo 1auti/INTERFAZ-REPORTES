@@ -37,7 +37,7 @@
 
         <vlayout sclass="main-content-area" spacing="0" hflex="1">
             <include src="/components/navbar/navbar.zul" sclass="nav-bar-container" />
-            <window sclass="content-window" viewModel="@id('vm') @init('org.zkoss.dominial.web.viewmodel.MainApplicationVM')">
+            <window sclass="content-window" viewModel="@id('vm') @init('org.zkoss.reporte.web.viewmodel.MainApplicationVM')">
                 <include id="mainInclude" sclass="dynamic-content" src="@load(vm.contentUrl)"/>
             </window>
         </vlayout>

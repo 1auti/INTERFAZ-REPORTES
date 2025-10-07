@@ -4,7 +4,7 @@
     <style src="/pages/home/home.css" />
 
     <hlayout width="100%" class="body">
-        <div sclass="sidebar" viewModel="@id('vm') @init('org.zkoss.dominial.dashboard.LoginVM')">
+        <div sclass="sidebar" viewModel="@id('vm') @init('org.zkoss.reporte.dashboard.LoginVM')">
 
             <div height="160px" sclass="user-logo text-center">
                 <image src="/resources/image/logo.jpg" width="120px" sclass="rounded" />

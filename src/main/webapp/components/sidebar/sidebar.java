@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.zkoss.dominial.web.navigation.NavigationFactory;
-import org.zkoss.dominial.web.navigation.NavigationMenu;
-import org.zkoss.dominial.web.navigation.NavigationService;
+import org.zkoss.reporte.web.navigation.NavigationFactory;
+import org.zkoss.reporte.web.navigation.NavigationMenu;
+import org.zkoss.reporte.web.navigation.NavigationService;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Desktop;
@@ -15,7 +15,7 @@ import org.zkoss.zk.ui.Executions;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.zkoss.dominial.web.viewmodel.MainApplicationVM.NAVIGATION;
+import static org.zkoss.reporte.web.viewmodel.MainApplicationVM.NAVIGATION;
 
 @Getter
 @Setter

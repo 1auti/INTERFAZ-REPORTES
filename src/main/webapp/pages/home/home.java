@@ -1,12 +1,12 @@
 package home;
 
-import org.zkoss.dominial.web.navigation.NavigationService;
+import org.zkoss.reporte.web.navigation.NavigationService;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.Executions;
 import org.springframework.stereotype.Component;
-import static org.zkoss.dominial.web.viewmodel.MainApplicationVM.NAVIGATION;
+import static org.zkoss.reporte.web.viewmodel.MainApplicationVM.NAVIGATION;
 
 @Component("home.home")
 public class home {
@@ -42,34 +42,10 @@ public class home {
     }
 
     @Command
-    public void navigateTypeVehicle() {
-        navigateUsingService(NavigationService.TYPEVEHICLES_PATH, "Tipo Vehiculo");
-    }
+    public void navigateReporte(){ navigateUsingService(NavigationService.REPORTE_PATH, "Reportes");}
 
     @Command
-    public void navigateRules() {
-        navigateUsingService(NavigationService.RULES_PATH, "Reglas");
-    }
-
-    @Command
-    public void navigateMapeo() {
-        navigateUsingService(NavigationService.MAPEO_PATH, "Mapeo");
-    }
-
-    @Command
-    public void navigateLoadExcel() {
-        navigateUsingService(NavigationService.LOADEXCEL_PATH, "Carga de Excel");
-    }
-
-    @Command
-    public void navigateBatch() {
-        navigateUsingService(NavigationService.BATCH_PATH, "Gestión de Lotes");
-    }
-
-    @Command
-    public void navigateHistory() {
-        navigateUsingService(NavigationService.HISTORY_PATH, "Historial");
-    }
+    public void navigateAdmin(){ navigateUsingService(NavigationService.ADMIN_PATH, "Admin");}
 
     /**
      * Método para cambiar el contenido usando NavigationService
