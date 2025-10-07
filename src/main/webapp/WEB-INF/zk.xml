@@ -1,152 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--ZK.XML-->
 <zk>
-    <!--
-    Este es el archivo principal de configuración para el framework ZK.
-    Define cómo se comportará la aplicación ZK en términos de rendimiento,
-    seguridad, integración y características habilitadas.
-    -->
-
-    <!-- Configuración específica para ZK 9.6 -->
-
-    <!--
-    Habilitar la integración con Spring:
-    Este listener permite resolver variables de Spring dentro de ZK,
-    facilitando la inyección de dependencias entre ZK y Spring.
-    -->
+    <!-- ============================================== -->
+    <!-- LISTENER PARA SPRING (NO variable-resolver)   -->
+    <!-- ============================================== -->
     <listener>
         <listener-class>org.zkoss.zkplus.spring.DelegatingVariableResolver</listener-class>
     </listener>
 
-    <!--
-    Deshabilitar la compresión de recursos para desarrollo:
-    - debug-js=true: Mantiene el código JavaScript legible (no minificado) para facilitar la depuración
-    - addon-uri: Especifica la ubicación de archivos adicionales de configuración de lenguaje
-    -->
+    <!-- ============================================== -->
+    <!-- CONFIGURACIÓN DEL CLIENTE                      -->
+    <!-- ============================================== -->
     <client-config>
         <debug-js>true</debug-js>
-        <addon-uri>/resources/metainfo.zk/lang-addon.xml</addon-uri>
     </client-config>
 
-    <!--
-    Configuración del sistema:
-    - ui-factory-class: Define una fábrica UI serializable que permite mantener el estado de la interfaz
-      durante la serialización/deserialización, útil para clustering y alta disponibilidad
-    - max-desktops-per-session: Limita a 20 el número máximo de escritorios (páginas) por sesión de usuario
-      para prevenir el agotamiento de recursos del servidor
-    - max-upload-size: Establece el tamaño máximo de carga en 10MB (10485760 bytes)
-    -->
+    <!-- ============================================== -->
+    <!-- CONFIGURACIÓN DEL SISTEMA                      -->
+    <!-- ============================================== -->
     <system-config>
         <ui-factory-class>org.zkoss.zk.ui.http.SerializableUiFactory</ui-factory-class>
-        <max-desktops-per-session>20</max-desktops-per-session> <!-- Reducir a 20 -->
+        <max-desktops-per-session>20</max-desktops-per-session>
         <max-upload-size>10485760</max-upload-size>
     </system-config>
 
-    <!--
-    Configuración para desarrollo:
-    - autowire.enabled: Activa el cableado automático de componentes (inyección automática)
-    - autowire.forceByName: Fuerza la inyección por nombre en lugar de por tipo,
-      lo que significa que los nombres de variables deben coincidir exactamente
-    -->
+    <!-- ============================================== -->
+    <!-- AUTOWIRING                                     -->
+    <!-- ============================================== -->
     <library-property>
         <name>org.zkoss.zk.ui.composer.autowire.enabled</name>
         <value>true</value>
     </library-property>
+
     <library-property>
-        <name>org.zkoss.zk.ui.composer.autowire.forceByName</name>
+        <name>org.zkoss.bind.composer.autowire.enabled</name>
         <value>true</value>
     </library-property>
 
-    <!--
-    Integración con Spring:
-    Define qué contexto de aplicación Spring se utilizará para la integración.
-    ROOT indica que se usará el contexto raíz de Spring definido en web.xml
-    -->
+    <!-- ============================================== -->
+    <!-- SPRING INTEGRATION                             -->
+    <!-- ============================================== -->
     <library-property>
-        <name>org.zkoss.zkplus.spring.DelegatingVariableResolver.applicationContext</name>
-        <value>org.springframework.web.context.WebApplicationContext.ROOT</value>
-    </library-property>
-
-    <!--
-    Permitir imágenes:
-    Habilita la carga y visualización de imágenes en la aplicación
-    -->
-    <library-property>
-        <name>org.zkoss.zul.image.allowed</name>
+        <name>org.zkoss.zk.ui.spring.EnableSpringScopes</name>
         <value>true</value>
     </library-property>
 
-
-    <library-property>
-        <name>org.zkoss.zul.theme.className.enabled</name>
-        <value>false</value>
-    </library-property>
-
-
-    <!--
-    Deshabilitar la detención de la WebApp:
-    Evita que la aplicación web se detenga en ciertas condiciones,
-    útil para entornos de producción donde la disponibilidad es crítica
-    -->
-    <library-property>
-        <name>org.zkoss.zk.ui.WebApp.stopDisabled</name>
-        <value>true</value>
-    </library-property>
-
-    <!--
-    Opciones adicionales de la sesión (comentadas):
-    - timer-keep-alive: Mantendría viva la sesión con pings periódicos
-    - timeout-uri: Redirigiría a esta página cuando la sesión expire
-    Están comentadas, por lo que estas funciones no están activas
-    -->
+    <!-- ============================================== -->
+    <!-- SESIÓN                                         -->
+    <!-- ============================================== -->
     <session-config>
-        <!--
-            1/60 hasta mas en minutos (1 un minuto)
-            -1 No expira
-         -->
         <session-timeout>-1</session-timeout>
-        <timer-keep-alive>true</timer-keep-alive>
-        <!--<timeout-uri>/timeout.zul</timeout-uri>
-        &lt;!&ndash; 30 segundos &ndash;&gt;
-        <desktop-timeout>30</desktop-timeout>-->
     </session-config>
-
-    <!-- Configuración adicional para mejorar la gestión de desktop -->
-    <library-property>
-        <name>org.zkoss.zk.desktop.timeout</name>
-        <value>-1</value> <!-- Timeout del desktop en segundos (60 min) -->
-    </library-property>
-
-    <!-- Configuración para limpiar desktops expirados -->
-    <library-property>
-        <name>org.zkoss.zk.ui.WebApp.desktop.cleanup.enable</name>
-        <value>true</value>
-    </library-property>
-
-    <!-- Intervalo de limpieza en segundos -->
-    <library-property>
-        <name>org.zkoss.zk.ui.WebApp.desktop.cleanup.period</name>
-        <value>1</value> <!-- Cada 10 minutos -->
-    </library-property>
-    <!--
-    Configuración ZK EE para CometAsyncServlet:
-    Habilita Comet, una técnica para comunicación asíncrona servidor-cliente
-    que permite actualizaciones en tiempo real (push) desde el servidor
-    -->
-    <library-property>
-        <name>org.zkoss.zkmax.ui.comet.disabled</name>
-        <value>false</value>
-    </library-property>
-
-    <!--
-    Configuración de dispositivo:
-    - device-type=ajax: Define que se está configurando el tipo de dispositivo AJAX
-    - stylesheet-uri: Incluye la hoja de estilos de Cropper (biblioteca para recortar imágenes)
-    - javascript-module: Carga el módulo JavaScript de Cropper versión 1.5.12
-    -->
-    <device-config>
-        <device-type>ajax</device-type>
-        <stylesheet-uri>/css/cropper.min.css</stylesheet-uri>
-        <javascript-module name="cropper" version="1.5.12"/>
-    </device-config>
 </zk>

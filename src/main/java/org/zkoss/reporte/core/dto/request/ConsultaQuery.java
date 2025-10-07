@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ConsultaQuery {
     private String nombreQuery;
-    private ParametrosFIltros parametrosFiltros;
+    private ParametrosFiltros parametrosFiltros;
     private String formato;
 }

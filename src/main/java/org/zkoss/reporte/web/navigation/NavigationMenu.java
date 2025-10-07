@@ -1,40 +1,35 @@
 package org.zkoss.reporte.web.navigation;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.ArrayList;
+import lombok.Data;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class NavigationMenu {
     private String label;
+    private String title;
     private String icon;
     private String path;
-    private int counter;
-    private List<NavigationMenu> subMenus = new ArrayList<>();
-    private boolean expanded = false;
-    private String title;
+    private Integer counter;
+    private boolean expanded;
+    private List<NavigationMenu> subMenus;
 
-    public NavigationMenu(String label) {
-        this.label = label;
+    // ===== NUEVO =====
+    private String queryCodigo; // Código de la query asociada
+
+    public NavigationMenu() {
+        this.expanded = false;
     }
 
-    public NavigationMenu(String label, String icon) {
+    // Constructor con parámetros si lo necesitas
+    public NavigationMenu(String label, String icon, String path) {
         this.label = label;
         this.icon = icon;
+        this.path = path;
+        this.expanded = false;
     }
 
-    public boolean isExpanded() {
-        return expanded;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "label='" + label + '\'' +
-                ", path='" + path + '\'' +
-                '}';
+    public NavigationMenu(String label,String icon){
+        this.label = label;
+        this.icon = icon;
     }
 }

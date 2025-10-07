@@ -240,3 +240,118 @@
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: #9ca3af;
 }
+
+/* ... CSS existente ... */
+
+/* Estilos para el chevron en queries */
+.menu-item .chevron-icon {
+    height: 100%;
+    position: absolute;
+    right: 12px;
+    top: 4px;
+    margin-left: auto;
+    margin-top: 8px;
+    color: #d1d5db;
+    font-size: 9px !important;
+    transition: transform 0.3s ease;
+}
+
+.menu-item.expanded .chevron-icon {
+    transform: rotate(90deg);
+}
+
+/* Separador visual para queries */
+.menu-title[data-section="queries"] {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 16px;
+    padding-top: 16px;
+}
+
+/* Estilos para submenús de queries */
+.submenu .menu-item {
+    padding-left: 32px !important;
+    position: relative;
+}
+
+.submenu .menu-item::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    background: #6b7280;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.submenu .menu-item.active::before {
+    background: #5da9ff;
+}
+
+/* Badge para queries consolidables (opcional) */
+.query-badge {
+    background: #22c55e;
+    color: #ffffff;
+    font-size: 8px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: auto;
+    font-weight: 600;
+}
+
+/* Botón de recarga (para desarrollo) */
+.reload-queries-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: calc(230px - 40px);
+}
+
+.btn-reload {
+    width: 100%;
+    background: rgba(88, 166, 255, 0.2);
+    border: 1px solid #5da9ff;
+    color: #ffffff;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.3s ease;
+}
+
+.btn-reload:hover {
+    background: rgba(88, 166, 255, 0.3);
+}
+
+/* Loading state para queries */
+.queries-loading {
+    text-align: center;
+    padding: 20px;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.queries-loading i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Empty state */
+.no-queries {
+    text-align: center;
+    padding: 20px 10px;
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.no-queries i {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 8px;
+    opacity: 0.5;
+}

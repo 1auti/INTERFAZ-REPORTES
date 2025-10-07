@@ -27,7 +27,7 @@ public class NavigationService {
      * */
     private String contentUrl = DASHBOARD_PATH;
     private String location = "dashboard";
-    private String title = "Datos Dominiales";
+    private String title = "Interfaz Reporte";
     /**
      * Getters
      * */

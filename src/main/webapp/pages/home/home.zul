@@ -2,94 +2,169 @@
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
     <style src="/pages/home/home.css" />
 
-    <div width="100%" viewModel="@id('vm') @init('home.home')" sclass="home-container">
-        <!-- Cards Grid -->
-        <div sclass="cards-grid">
+    <div width="100%" viewModel="@id('vm') @init('home.home')" sclass="reportes-dashboard">
 
-            <!-- Card: Carga de Excel -->
-            <div sclass="menu-card success-card" onClick="@command('navigateLoadExcel')">
-                <div sclass="card-icon-wrapper success">
-                    <n:i class="fas fa-file-excel card-icon"></n:i>
-                </div>
-                <div sclass="card-content">
-                    <n:h3 class="card-title">Importar Excel</n:h3>
-                    <n:p class="card-description">Importación y procesado de Lotes desde archivo Excel</n:p>
-                </div>
-                <div sclass="card-footer">
-                    <n:span class="card-action">Cargar Lote<n:i class="fas fa-arrow-right"></n:i></n:span>
-                </div>
+        <!-- Welcome Banner -->
+        <div sclass="welcome-banner">
+            <div sclass="welcome-content">
+                <n:h1 class="welcome-title">
+                    <n:i class="fas fa-chart-line"></n:i>
+                    Bienvenido al Sistema de Reportes
+                </n:h1>
+                <n:p class="welcome-text">
+                    Seleccione una query del menú lateral para comenzar o explore las acciones rápidas
+                </n:p>
             </div>
-
-            <!-- Card: Lotes -->
-            <div sclass="menu-card warning-card" onClick="@command('navigateBatch')">
-                <div sclass="card-icon-wrapper warning">
-                    <n:i class="fas fa-boxes card-icon"></n:i>
-                </div>
-                <div sclass="card-content">
-                    <n:h3 class="card-title">Lotes</n:h3>
-                    <n:p class="card-description">Gestión y procesamiento de lotes de datos</n:p>
-                </div>
-                <div sclass="card-footer">
-                    <n:span class="card-action">Ver lotes <n:i class="fas fa-arrow-right"></n:i></n:span>
-                </div>
+            <div sclass="welcome-icon">
+                <n:i class="fas fa-database"></n:i>
             </div>
-
-            <!-- Card: Tipo Vehiculo -->
-            <div sclass="menu-card primary-card" onClick="@command('navigateTypeVehicle')">
-                <div sclass="card-icon-wrapper primary">
-                    <n:i class="fas fa-car card-icon"></n:i>
-                </div>
-                <div sclass="card-content">
-                    <n:h3 class="card-title">Tipo Vehículo</n:h3>
-                    <n:p class="card-description">Configuración de tipos de vehículos </n:p>
-                </div>
-                <div sclass="card-footer">
-                    <n:span class="card-action">Configurar <n:i class="fas fa-arrow-right"></n:i></n:span>
-                </div>
-            </div>
-
-            <!-- Card: Reglas -->
-            <div sclass="menu-card secondary-card" onClick="@command('navigateRules')">
-                <div sclass="card-icon-wrapper secondary">
-                    <n:i class="fas fa-cogs card-icon"></n:i>
-                </div>
-                <div sclass="card-content">
-                    <n:h3 class="card-title">Reglas</n:h3>
-                    <n:p class="card-description">Gestión de rules de negocio y validaciones</n:p>
-                </div>
-                <div sclass="card-footer">
-                    <n:span class="card-action">Gestionar <n:i class="fas fa-arrow-right"></n:i></n:span>
-                </div>
-            </div>
-
-            <!-- Card: Mapeo -->
-            <div sclass="menu-card info-card" onClick="@command('navigateMapeo')">
-                <div sclass="card-icon-wrapper info">
-                    <n:i class="fas fa-map card-icon"></n:i>
-                </div>
-                <div sclass="card-content">
-                    <n:h3 class="card-title">Mapeo de Datos</n:h3>
-                    <n:p class="card-description">Configuración de mapeos y relaciones de datos</n:p>
-                </div>
-                <div sclass="card-footer">
-                    <n:span class="card-action">Configurar <n:i class="fas fa-arrow-right"></n:i></n:span>
-                </div>
-            </div>
-
-            <!-- Card: Historial -->
-            <div sclass="menu-card dark-card" onClick="@command('navigateHistory')">
-                <div sclass="card-icon-wrapper dark">
-                    <n:i class="fas fa-history card-icon"></n:i>
-                </div>
-                <div sclass="card-content">
-                    <n:h3 class="card-title">Historial Actividades</n:h3>
-                    <n:p class="card-description">Consulta de registros y datos de actividades</n:p>
-                </div>
-                <div sclass="card-footer">
-                    <n:span class="card-action">Ver Actividades <n:i class="fas fa-arrow-right"></n:i></n:span>
-                </div>
-            </div>
-
         </div>
+
+        <!-- Stats Grid -->
+        <div sclass="stats-grid">
+            <div sclass="stat-box stat-primary">
+                <div sclass="stat-icon">
+                    <n:i class="fas fa-database"></n:i>
+                </div>
+                <div sclass="stat-info">
+                    <n:span class="stat-value">@load(vm.totalQueries)</n:span>
+                    <n:span class="stat-label">Queries Disponibles</n:span>
+                </div>
+            </div>
+
+            <div sclass="stat-box stat-success">
+                <div sclass="stat-icon">
+                    <n:i class="fas fa-check-circle"></n:i>
+                </div>
+                <div sclass="stat-info">
+                    <n:span class="stat-value">@load(vm.queriesConsolidables)</n:span>
+                    <n:span class="stat-label">Consolidables</n:span>
+                </div>
+            </div>
+
+            <div sclass="stat-box stat-info">
+                <div sclass="stat-icon">
+                    <n:i class="fas fa-chart-bar"></n:i>
+                </div>
+                <div sclass="stat-info">
+                    <n:span class="stat-value">@load(vm.reportesHoy)</n:span>
+                    <n:span class="stat-label">Reportes Hoy</n:span>
+                </div>
+            </div>
+
+            <div sclass="stat-box stat-warning">
+                <div sclass="stat-icon">
+                    <n:i class="fas fa-clock"></n:i>
+                </div>
+                <div sclass="stat-info">
+                    <n:span class="stat-value">@load(vm.ultimaEjecucion)</n:span>
+                    <n:span class="stat-label">Última Ejecución</n:span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div sclass="quick-actions-section">
+            <n:h2 class="section-title">
+                <n:i class="fas fa-bolt"></n:i> Acciones Rápidas
+            </n:h2>
+
+            <div sclass="actions-grid">
+                <!-- Nueva Consulta -->
+                <button sclass="action-btn action-primary" onClick="@command('navegarNuevaConsulta')">
+                    <div sclass="action-icon">
+                        <n:i class="fas fa-plus-circle"></n:i>
+                    </div>
+                    <div sclass="action-content">
+                        <n:span class="action-title">Nueva Consulta</n:span>
+                        <n:span class="action-desc">Ejecutar query personalizada</n:span>
+                    </div>
+                </button>
+
+                <!-- Última Consulta -->
+                <button sclass="action-btn action-secondary" onClick="@command('navegarUltimaConsulta')">
+                    <div sclass="action-icon">
+                        <n:i class="fas fa-history"></n:i>
+                    </div>
+                    <div sclass="action-content">
+                        <n:span class="action-title">Última Consulta</n:span>
+                        <n:span class="action-desc">Repetir última ejecución</n:span>
+                    </div>
+                </button>
+
+                <!-- Exportar Datos -->
+                <button sclass="action-btn action-success" onClick="@command('navegarExportar')">
+                    <div sclass="action-icon">
+                        <n:i class="fas fa-file-export"></n:i>
+                    </div>
+                    <div sclass="action-content">
+                        <n:span class="action-title">Exportar Datos</n:span>
+                        <n:span class="action-desc">Descargar en Excel/CSV</n:span>
+                    </div>
+                </button>
+
+                <!-- Dashboard -->
+                <button sclass="action-btn action-info" onClick="@command('navegarDashboard')">
+                    <div sclass="action-icon">
+                        <n:i class="fas fa-chart-pie"></n:i>
+                    </div>
+                    <div sclass="action-content">
+                        <n:span class="action-title">Dashboard</n:span>
+                        <n:span class="action-desc">Vista consolidada</n:span>
+                    </div>
+                </button>
+
+                <!-- Gestión Queries -->
+                <button sclass="action-btn action-warning" onClick="@command('navegarGestionQueries')">
+                    <div sclass="action-icon">
+                        <n:i class="fas fa-cogs"></n:i>
+                    </div>
+                    <div sclass="action-content">
+                        <n:span class="action-title">Administrar Queries</n:span>
+                        <n:span class="action-desc">Crear y editar queries</n:span>
+                    </div>
+                </button>
+
+                <!-- Ayuda -->
+                <button sclass="action-btn action-dark" onClick="@command('navegarAyuda')">
+                    <div sclass="action-icon">
+                        <n:i class="fas fa-question-circle"></n:i>
+                    </div>
+                    <div sclass="action-content">
+                        <n:span class="action-title">Ayuda</n:span>
+                        <n:span class="action-desc">Documentación y soporte</n:span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div sclass="recent-section">
+            <n:h2 class="section-title">
+                <n:i class="fas fa-clock"></n:i> Actividad Reciente
+            </n:h2>
+
+            <div sclass="recent-list">
+                <div sclass="recent-item" forEach="@load(vm.actividadReciente)">
+                    <div sclass="recent-icon">
+                        <n:i class="fas fa-file-alt"></n:i>
+                    </div>
+                    <div sclass="recent-info">
+                        <n:span class="recent-title">@load(each.nombreQuery)</n:span>
+                        <n:span class="recent-date">@load(each.fechaEjecucion)</n:span>
+                    </div>
+                    <div sclass="recent-badge">
+                        <n:span>@load(each.registros) registros</n:span>
+                    </div>
+                </div>
+
+                <!-- Mensaje si no hay actividad -->
+                <div sclass="no-activity" visible="@load(empty vm.actividadReciente)">
+                    <n:i class="fas fa-inbox"></n:i>
+                    <n:p>No hay actividad reciente</n:p>
+                </div>
+            </div>
+        </div>
+
     </div>
 </zk>

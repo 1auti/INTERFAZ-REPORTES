@@ -2,47 +2,72 @@
     xmlns:h="http://www.w3.org/1999/xhtml">
     <style src="/components/sidebar/sidebar.css" />
 
-    <div id="sidebar" sclass="sidebar" viewModel="@id('vm') @init('sidebar.sidebar')">
+    <div id="sidebar" sclass="sidebar" viewModel="@id('vm') @init('sidebar')">
         <div>
+            <!-- Título de interfaz -->
             <div sclass="d-flex justify-content-center interfaz-title" width="100%">
                 <label value="@load(vm.interfazTitle)" />
             </div>
 
-            <div height="170px" sclass="user-logo  mt-2" onClick="@command('onNavigate')">
+            <!-- Logo -->
+            <div height="170px" sclass="user-logo mt-2" onClick="@command('onNavigate')">
                 <image src="/resources/image/logo.jpg" width="120px" sclass="rounded"/>
             </div>
 
+            <!-- Menú principal -->
             <div children="@load(vm.menuList)" style="padding-bottom: 80px;">
                 <template name="children" var="menu">
+
+                    <!-- Título de sección -->
                     <div if="${!empty menu.title}" sclass="menu-title">
                         <label value="@load(menu.title)" />
                     </div>
 
-                    <!--<div sclass="menu-item">
-                        <div sclass="menu" if="${!empty menu.subMenus}" onClick="@command('toggleMenu', menu=menu)">
+                    <!-- Item de menú principal -->
+                    <div sclass="menu-item ${menu.expanded ? 'expanded' : ''}">
+
+                        <!-- Menú con submenús (expandible) -->
+                        <div sclass="menu" if="${!empty menu.subMenus}"
+                             onClick="@command('toggleMenu', menu=menu)">
                             <n:span class="${menu.icon} icon"></n:span>
                             <label sclass="menu-label-menu" value="@load(menu.label)" />
-                            <n:span class="fa fa-chevron-down chevron-icon"></n:span>
+                            <n:span class="fa fa-chevron-right chevron-icon"></n:span>
                         </div>
 
-                        <div if="${empty menu.subMenus}" onClick="@command('navigate', menu=menu)">
+                        <!-- Menú sin submenús (navegación directa) -->
+                        <div if="${empty menu.subMenus}"
+                             onClick="@command('navigate', menu=menu)"
+                             sclass="${vm.isMenuActive(menu) ? 'active' : ''}">
                             <n:span class="${menu.icon} icon"></n:span>
                             <label value="@load(menu.label)" />
                         </div>
                     </div>
--->
-                    <!-- SUBMENÚS - FUERA del menu-item principal -->
-                    <div sclass="submenu ${menu.expanded ? 'expanded' : ''}" visible="@load(menu.expanded)">
+
+                    <!-- SUBMENÚS -->
+                    <div sclass="submenu ${menu.expanded ? 'expanded' : ''}"
+                         visible="@load(menu.expanded)">
                         <div children="@load(menu.subMenus)">
                             <template name="children" var="submenu">
-                                <div sclass="menu-item ${vm.isMenuActive(submenu) ? 'active' : ''}" onClick="@command('navigate', menu=submenu)">
+                                <div sclass="menu-item ${vm.isMenuActive(submenu) ? 'active' : ''}"
+                                     onClick="@command('navigate', menu=submenu)">
                                     <n:span class="${submenu.icon} icon"></n:span>
                                     <label sclass="menu-label-sub" value="@load(submenu.label)" />
                                 </div>
                             </template>
                         </div>
                     </div>
+
                 </template>
+            </div>
+
+            <!-- Botón para recargar queries (opcional, útil para desarrollo) -->
+            <!-- Puedes comentarlo en producción -->
+            <div sclass="reload-queries-btn" visible="false">
+                <button onClick="@command('recargarQueries')"
+                        sclass="btn-reload"
+                        iconSclass="fas fa-sync-alt">
+                    Recargar Queries
+                </button>
             </div>
         </div>
     </div>

@@ -19,7 +19,11 @@ import javax.servlet.DispatcherType;
 import java.util.EnumSet;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"org.zkoss.admin", "org.zkoss.zk_system"})
+@ComponentScan(basePackages = {
+        "org.zkoss.reporte",
+        "org.zkoss.reporte.web.viewmodel",
+        "org.zkoss.reporte.service"
+})
 public class AdminApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
