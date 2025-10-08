@@ -140,8 +140,8 @@ public class ReporteServiceImpl implements ReporteService {
 
         // Metadata de query
         MetadataQuery metadataQuery = MetadataQuery.builder()
-                .codigoQuery(tipoConsulta)
-                .nombreQuery(generarNombreQuery(tipoConsulta))
+                .codigo(tipoConsulta)
+                .nombre(generarNombreQuery(tipoConsulta))
                 .categoria("INFRACCIONES")
                 .fechaEjecucion(LocalDateTime.now())
                 .build();

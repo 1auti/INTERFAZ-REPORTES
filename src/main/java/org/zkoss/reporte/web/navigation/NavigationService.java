@@ -18,7 +18,7 @@ public class NavigationService {
      * DECLARACION DE PANTALLAS
      * */
     public static final String DASHBOARD_PATH = PAGES_BASE + "/home/home.zul";
-    public static final String REPORTE_PATH = PAGES_BASE + "/reporte/reporte.zul";
+    public static final String REPORTE_PATH = PAGES_BASE + "/reporte/ejecutar_query.zul";
     public static final String ADMIN_PATH = PAGES_BASE + "/admin/admin.zul";
 
 

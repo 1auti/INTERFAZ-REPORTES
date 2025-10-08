@@ -4,6 +4,16 @@
     max-width: 1600px;
     margin: 0 auto;
     background: transparent;
+    /* FIX: Agregar margin-left para compensar el sidebar */
+    margin-left: 230px; /* Ancho del sidebar */
+    transition: margin-left 0.3s ease;
+}
+
+/* Responsive: ajustar cuando el sidebar se colapsa */
+@media (max-width: 957px) {
+    .reportes-dashboard {
+        margin-left: 45px; /* Ancho del sidebar colapsado */
+    }
 }
 
 /* ===== WELCOME BANNER ===== */
@@ -306,6 +316,11 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+    .reportes-dashboard {
+        margin-left: 45px;
+        padding: clamp(1rem, 2vw, 1.5rem);
+    }
+
     .welcome-banner {
         flex-direction: column;
         text-align: center;
@@ -321,5 +336,13 @@
 
     .actions-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Extra pequeño: para móviles muy pequeños */
+@media (max-width: 480px) {
+    .reportes-dashboard {
+        margin-left: 0;
+        padding: 1rem;
     }
 }

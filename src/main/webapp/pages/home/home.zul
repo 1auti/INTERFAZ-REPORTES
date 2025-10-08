@@ -2,7 +2,7 @@
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
     <style src="/pages/home/home.css" />
 
-    <div width="100%" viewModel="@id('vm') @init('home.home')" sclass="reportes-dashboard">
+    <div width="100%" viewModel="@id('vm') @init('home.home')" sclass="reporte-dashboard">
 
         <!-- Welcome Banner -->
         <div sclass="welcome-banner">
@@ -27,7 +27,9 @@
                     <n:i class="fas fa-database"></n:i>
                 </div>
                 <div sclass="stat-info">
-                    <n:span class="stat-value">@load(vm.totalQueries)</n:span>
+                    <n:span class="stat-value">
+                        <label value="@load(vm.totalQueries)"/>
+                    </n:span>
                     <n:span class="stat-label">Queries Disponibles</n:span>
                 </div>
             </div>
@@ -37,17 +39,21 @@
                     <n:i class="fas fa-check-circle"></n:i>
                 </div>
                 <div sclass="stat-info">
-                    <n:span class="stat-value">@load(vm.queriesConsolidables)</n:span>
+                    <n:span class="stat-value">
+                        <label value="@load(vm.queriesConsolidables)" />
+                    </n:span>
                     <n:span class="stat-label">Consolidables</n:span>
                 </div>
             </div>
 
-            <div sclass="stat-box stat-info">
+            <div sclass="stat-box stat-success">
                 <div sclass="stat-icon">
-                    <n:i class="fas fa-chart-bar"></n:i>
+                    <n:i class="fas fa-file-alt"></n:i>
                 </div>
                 <div sclass="stat-info">
-                    <n:span class="stat-value">@load(vm.reportesHoy)</n:span>
+                    <n:span class="stat-value">
+                        <label value="@load(vm.reportesHoy)" />
+                    </n:span>
                     <n:span class="stat-label">Reportes Hoy</n:span>
                 </div>
             </div>
@@ -57,7 +63,9 @@
                     <n:i class="fas fa-clock"></n:i>
                 </div>
                 <div sclass="stat-info">
-                    <n:span class="stat-value">@load(vm.ultimaEjecucion)</n:span>
+                    <n:span class="stat-value">
+                        <label value="@load(vm.ultimaEjecucion)"/>
+                    </n:span>
                     <n:span class="stat-label">Última Ejecución</n:span>
                 </div>
             </div>
@@ -73,66 +81,66 @@
                 <!-- Nueva Consulta -->
                 <button sclass="action-btn action-primary" onClick="@command('navegarNuevaConsulta')">
                     <div sclass="action-icon">
-                        <n:i class="fas fa-plus-circle"></n:i>
+                        <label sclass="fas fa-plus-circle"></label>
                     </div>
                     <div sclass="action-content">
-                        <n:span class="action-title">Nueva Consulta</n:span>
-                        <n:span class="action-desc">Ejecutar query personalizada</n:span>
+                        <label value="Nueva Consulta" sclass="action-title"/>
+                        <label value="Ejecutar query personalizada" sclass="action-desc"/>
                     </div>
                 </button>
 
                 <!-- Última Consulta -->
                 <button sclass="action-btn action-secondary" onClick="@command('navegarUltimaConsulta')">
                     <div sclass="action-icon">
-                        <n:i class="fas fa-history"></n:i>
+                        <label sclass="fas fa-history"></label>
                     </div>
                     <div sclass="action-content">
-                        <n:span class="action-title">Última Consulta</n:span>
-                        <n:span class="action-desc">Repetir última ejecución</n:span>
+                        <label value="Última Consulta" sclass="action-title"/>
+                        <label value="Repetir última ejecución" sclass="action-desc"/>
                     </div>
                 </button>
 
                 <!-- Exportar Datos -->
                 <button sclass="action-btn action-success" onClick="@command('navegarExportar')">
                     <div sclass="action-icon">
-                        <n:i class="fas fa-file-export"></n:i>
+                        <label sclass="fas fa-file-export"></label>
                     </div>
                     <div sclass="action-content">
-                        <n:span class="action-title">Exportar Datos</n:span>
-                        <n:span class="action-desc">Descargar en Excel/CSV</n:span>
+                        <label value="Exportar Datos" sclass="action-title"/>
+                        <label value="Descargar en Excel/CSV" sclass="action-desc"/>
                     </div>
                 </button>
 
                 <!-- Dashboard -->
                 <button sclass="action-btn action-info" onClick="@command('navegarDashboard')">
                     <div sclass="action-icon">
-                        <n:i class="fas fa-chart-pie"></n:i>
+                        <label sclass="fas fa-chart-pie"></label>
                     </div>
                     <div sclass="action-content">
-                        <n:span class="action-title">Dashboard</n:span>
-                        <n:span class="action-desc">Vista consolidada</n:span>
+                        <label value="Dashboard" sclass="action-title"/>
+                        <label value="Vista consolidada" sclass="action-desc"/>
                     </div>
                 </button>
 
                 <!-- Gestión Queries -->
                 <button sclass="action-btn action-warning" onClick="@command('navegarGestionQueries')">
                     <div sclass="action-icon">
-                        <n:i class="fas fa-cogs"></n:i>
+                        <label sclass="fas fa-cogs"></label>
                     </div>
                     <div sclass="action-content">
-                        <n:span class="action-title">Administrar Queries</n:span>
-                        <n:span class="action-desc">Crear y editar queries</n:span>
+                        <label value="Administrar Queries" sclass="action-title"/>
+                        <label value="Crear y editar queries" sclass="action-desc"/>
                     </div>
                 </button>
 
                 <!-- Ayuda -->
                 <button sclass="action-btn action-dark" onClick="@command('navegarAyuda')">
                     <div sclass="action-icon">
-                        <n:i class="fas fa-question-circle"></n:i>
+                        <label sclass="fas fa-question-circle"></label>
                     </div>
                     <div sclass="action-content">
-                        <n:span class="action-title">Ayuda</n:span>
-                        <n:span class="action-desc">Documentación y soporte</n:span>
+                        <label value="Ayuda" sclass="action-title"/>
+                        <label value="Documentación y soporte" sclass="action-desc"/>
                     </div>
                 </button>
             </div>
@@ -150,11 +158,15 @@
                         <n:i class="fas fa-file-alt"></n:i>
                     </div>
                     <div sclass="recent-info">
-                        <n:span class="recent-title">@load(each.nombreQuery)</n:span>
-                        <n:span class="recent-date">@load(each.fechaEjecucion)</n:span>
+                        <n:span class="recent-title">
+                            <label value="@load(each.nombreQuery)"/>
+                        </n:span>
+                        <n:span class="recent-date">
+                            <label value="@load(each.fechaEjecucion)"  />
+                        </n:span>
                     </div>
                     <div sclass="recent-badge">
-                        <n:span>@load(each.registros) registros</n:span>
+                        <n:span> <label value = "@load(each.registros)" /> registros</n:span>
                     </div>
                 </div>
 

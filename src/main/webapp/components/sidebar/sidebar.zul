@@ -14,8 +14,8 @@
                 <image src="/resources/image/logo.jpg" width="120px" sclass="rounded"/>
             </div>
 
-            <!-- Menú principal -->
-            <div children="@load(vm.menuList)" style="padding-bottom: 80px;">
+            <!-- Menú principal CON PADDING GENEROSO -->
+            <div children="@load(vm.menuList)" style="padding-bottom: 200px;">
                 <template name="children" var="menu">
 
                     <!-- Título de sección -->
@@ -28,7 +28,8 @@
 
                         <!-- Menú con submenús (expandible) -->
                         <div sclass="menu" if="${!empty menu.subMenus}"
-                             onClick="@command('toggleMenu', menu=menu)">
+                             onClick="@command('toggleMenu', menu=menu)"
+                             data-title="@load(menu.label)">
                             <n:span class="${menu.icon} icon"></n:span>
                             <label sclass="menu-label-menu" value="@load(menu.label)" />
                             <n:span class="fa fa-chevron-right chevron-icon"></n:span>
@@ -37,7 +38,8 @@
                         <!-- Menú sin submenús (navegación directa) -->
                         <div if="${empty menu.subMenus}"
                              onClick="@command('navigate', menu=menu)"
-                             sclass="${vm.isMenuActive(menu) ? 'active' : ''}">
+                             sclass="${vm.isMenuActive(menu) ? 'active' : ''}"
+                             data-title="@load(menu.label)">
                             <n:span class="${menu.icon} icon"></n:span>
                             <label value="@load(menu.label)" />
                         </div>
@@ -49,7 +51,8 @@
                         <div children="@load(menu.subMenus)">
                             <template name="children" var="submenu">
                                 <div sclass="menu-item ${vm.isMenuActive(submenu) ? 'active' : ''}"
-                                     onClick="@command('navigate', menu=submenu)">
+                                     onClick="@command('navigate', menu=submenu)"
+                                     data-title="@load(submenu.label)">
                                     <n:span class="${submenu.icon} icon"></n:span>
                                     <label sclass="menu-label-sub" value="@load(submenu.label)" />
                                 </div>
@@ -61,7 +64,6 @@
             </div>
 
             <!-- Botón para recargar queries (opcional, útil para desarrollo) -->
-            <!-- Puedes comentarlo en producción -->
             <div sclass="reload-queries-btn" visible="false">
                 <button onClick="@command('recargarQueries')"
                         sclass="btn-reload"

@@ -1,5 +1,7 @@
 package org.zkoss.reporte.core.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,7 +68,7 @@ public class DatabaseQueryServiceImpl implements DatabaseQueryService {
     }
 
     @Override
-    public List<MetadataQueryRegistro> traerQuerys(String categoria) {
+    public List<MetadataQuery> traerQuerys(String categoria) {
         try {
             log.info("Obteniendo queries - Categoría: {}", categoria);
 
@@ -99,7 +101,7 @@ public class DatabaseQueryServiceImpl implements DatabaseQueryService {
     }
 
     @Override
-    public MetadataQueryRegistro obtenerQuery(String codigo) {
+    public MetadataQuery obtenerQuery(String codigo) {
         try {
             log.info("Obteniendo query: {}", codigo);
 
@@ -233,7 +235,7 @@ public class DatabaseQueryServiceImpl implements DatabaseQueryService {
     // =============== BÚSQUEDA Y FILTRADO ===============
 
     @Override
-    public List<MetadataQueryRegistro> buscarQueries(String texto) {
+    public List<MetadataQuery> buscarQueries(String texto) {
         try {
             log.info("Buscando queries: {}", texto);
 
@@ -265,7 +267,7 @@ public class DatabaseQueryServiceImpl implements DatabaseQueryService {
     }
 
     @Override
-    public List<MetadataQueryRegistro> obtenerQueriesConsolidables() {
+    public List<MetadataQuery> obtenerQueriesConsolidables() {
         try {
             log.info("Obteniendo queries consolidables");
 
@@ -294,7 +296,7 @@ public class DatabaseQueryServiceImpl implements DatabaseQueryService {
     }
 
     @Override
-    public List<MetadataQueryRegistro> obtenerQueriesPopulares(int limite) {
+    public List<MetadataQuery> obtenerQueriesPopulares(int limite) {
         try {
             log.info("Obteniendo queries populares - Límite: {}", limite);
 
@@ -373,6 +375,22 @@ public class DatabaseQueryServiceImpl implements DatabaseQueryService {
     /**
      * Convierte la respuesta de registro/actualización a MetadataRegistroQuery
      */
+    private MetadataQuery convertirRespuesta(Map<String, Object> respuesta) {
+        if (respuesta == null) {
+            return null;
+        }
+
+        MetadataQuery resultado = new MetadataQuery();
+
+        // Query
+        if (respuesta.containsKey("query")) {
+            Map<String, Object> queryMap = (Map<String, Object>) respuesta.get("query");
+            resultado = (convertirMapAMetadataQuery(queryMap));
+        }
+
+        return resultado;
+    }
+
     private MetadataRegistroQuery convertirRespuestaRegistro(Map<String, Object> respuesta) {
         if (respuesta == null) {
             return null;
@@ -380,20 +398,10 @@ public class DatabaseQueryServiceImpl implements DatabaseQueryService {
 
         MetadataRegistroQuery resultado = new MetadataRegistroQuery();
 
-        // Mensaje
-        if (respuesta.containsKey("mensaje")) {
-            resultado.setMensaje((String) respuesta.get("mensaje"));
-        }
-
-        // Consolidable
-        if (respuesta.containsKey("consolidable")) {
-            resultado.setConsolidable((Boolean) respuesta.get("consolidable"));
-        }
-
         // Query
         if (respuesta.containsKey("query")) {
             Map<String, Object> queryMap = (Map<String, Object>) respuesta.get("query");
-            resultado.setMetadataQueryRegistro(convertirMapAMetadataQuery(queryMap));
+            resultado = (convertirMapAMetadataQueryRegistro(queryMap));
         }
 
         return resultado;
@@ -402,44 +410,183 @@ public class DatabaseQueryServiceImpl implements DatabaseQueryService {
     /**
      * Convierte un Map a MetadataQueryRegistro
      */
-    private MetadataQueryRegistro convertirMapAMetadataQuery(Map<String, Object> queryMap) {
+    private MetadataQuery convertirMapAMetadataQuery(Map<String, Object> queryMap) {
         if (queryMap == null) {
             return null;
         }
 
-        MetadataQueryRegistro metadata = new MetadataQueryRegistro();
+        // Debug: mostrar todas las claves disponibles
+        System.out.println("=== DEBUG: CLAVES EN QUERYMAP ===");
+        for (String key : queryMap.keySet()) {
+            Object value = queryMap.get(key);
+            System.out.println("Key: " + key + " | Value: " + value + " | Type: " +
+                    (value != null ? value.getClass().getSimpleName() : "null"));
+        }
 
+        MetadataQuery metadata = new MetadataQuery();
+
+        // Setters básicos
         metadata.setId(getIntegerValue(queryMap, "id"));
         metadata.setCodigo(getStringValue(queryMap, "codigo"));
         metadata.setNombre(getStringValue(queryMap, "nombre"));
+        metadata.setSqlQuery(getStringValue(queryMap, "sqlQuery"));
         metadata.setDescripcion(getStringValue(queryMap, "descripcion"));
-        metadata.setCatergoria(getStringValue(queryMap, "categoria"));
+        metadata.setCategoria(getStringValue(queryMap, "categoria"));
         metadata.setActiva(getBooleanValue(queryMap, "activa"));
         metadata.setEsConsolidable(getBooleanValue(queryMap, "esConsolidable"));
         metadata.setEstado(getStringValue(queryMap, "estado"));
+        metadata.setContadorUsos(getLongValue(queryMap, "contadorUsos"));
+
 
         // Fechas
         if (queryMap.containsKey("fechaCreacion")) {
             metadata.setFechaCreacion(convertirALocalDateTime(queryMap.get("fechaCreacion")));
         }
         if (queryMap.containsKey("fechaActualizacion")) {
-            metadata.setFechaActualzacion(convertirALocalDateTime(queryMap.get("fechaActualizacion")));
+            metadata.setFechaActualizacion(convertirALocalDateTime(queryMap.get("fechaActualizacion")));
         }
+
+
 
         // Metadata de consolidación
         if (Boolean.TRUE.equals(metadata.getEsConsolidable())) {
-            MetadataConsolidacion consolidacion = new MetadataConsolidacion();
-            consolidacion.setConsolidado(true);
+            System.out.println("Procesando campos de consolidación...");
 
+            // Campos agrupación
             if (queryMap.containsKey("camposAgrupacionList")) {
-                consolidacion.setCamposAgrupacion((List<String>) queryMap.get("camposAgrupacionList"));
+                Object camposObj = queryMap.get("camposAgrupacionList");
+                if (camposObj instanceof List) {
+                    metadata.setCamposAgrupacionList((List<String>) camposObj);
+                    System.out.println("Usando camposAgrupacionList: " + metadata.getCamposAgrupacionList());
+                }
             }
-            if (queryMap.containsKey("camposNumericosList")) {
-                consolidacion.setCamposNumericos((List<String>) queryMap.get("camposNumericosList"));
+            // Opción 2: Si no existe la lista, parsear el string JSON
+            else if (queryMap.containsKey("camposAgrupacion")) {
+                String camposJson = (String) queryMap.get("camposAgrupacion");
+                try {
+                    List<String> camposList = parseJsonStringToList(camposJson);
+                    metadata.setCamposAgrupacionList(camposList);
+                    System.out.println("Parseado desde camposAgrupacion: " + camposList);
+                } catch (Exception e) {
+                    System.err.println("Error parseando camposAgrupacion: " + e.getMessage());
+                }
             }
 
-            metadata.setMetadataConsolidacion(consolidacion);
+            // Aplicar la misma lógica para los otros campos
+            procesarCampoLista(queryMap, "camposNumericosList", "camposNumericos",
+                    metadata::setCamposNumericosList);
+            procesarCampoLista(queryMap, "camposUbicacionList", "camposUbicacion",
+                    metadata::setCamposUbicacionList);
+            procesarCampoLista(queryMap, "camposTiempoList", "camposTiempo",
+                    metadata::setCamposTiempoList);
         }
+
+        System.out.println("=== FIN DEBUG ===");
+        return metadata;
+    }
+
+    // Método auxiliar para procesar ambos formatos
+    private void procesarCampoLista(Map<String, Object> queryMap,
+                                    String keyList, String keyString,
+                                    java.util.function.Consumer<List<String>> setter) {
+
+        if (queryMap.containsKey(keyList)) {
+            Object camposObj = queryMap.get(keyList);
+            if (camposObj instanceof List) {
+                setter.accept((List<String>) camposObj);
+                System.out.println("Usando " + keyList + ": " + camposObj);
+                return;
+            }
+        }
+
+        if (queryMap.containsKey(keyString)) {
+            String camposJson = (String) queryMap.get(keyString);
+            try {
+                List<String> camposList = parseJsonStringToList(camposJson);
+                setter.accept(camposList);
+                System.out.println("Parseado desde " + keyString + ": " + camposList);
+            } catch (Exception e) {
+                System.err.println("Error parseando " + keyString + ": " + e.getMessage());
+            }
+        }
+    }
+
+    // Método para parsear el string JSON a List usando Jackson
+    private List<String> parseJsonStringToList(String jsonString) {
+        if (jsonString == null || jsonString.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(jsonString, new TypeReference<List<String>>() {});
+        } catch (Exception e) {
+            System.err.println("Error con ObjectMapper, usando parsing manual: " + e.getMessage());
+            // Fallback: parsing manual
+            return parseManual(jsonString);
+        }
+    }
+
+    // Parsing manual como fallback
+    private List<String> parseManual(String jsonString) {
+        List<String> result = new ArrayList<>();
+        if (jsonString == null || jsonString.trim().isEmpty()) {
+            return result;
+        }
+
+        try {
+            // Remover corchetes y espacios
+            String clean = jsonString.trim();
+            if (clean.startsWith("[")) {
+                clean = clean.substring(1);
+            }
+            if (clean.endsWith("]")) {
+                clean = clean.substring(0, clean.length() - 1);
+            }
+
+            // Dividir por comas y limpiar comillas
+            String[] parts = clean.split(",");
+            for (String part : parts) {
+                String cleanedPart = part.trim()
+                        .replace("\"", "")
+                        .replace("'", "")
+                        .replace("\\", "");
+                if (!cleanedPart.isEmpty()) {
+                    result.add(cleanedPart);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error en parsing manual: " + e.getMessage());
+        }
+
+        return result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    private MetadataRegistroQuery convertirMapAMetadataQueryRegistro(Map<String, Object> queryMap) {
+        if (queryMap == null) {
+            return null;
+        }
+
+        MetadataRegistroQuery metadata = new MetadataRegistroQuery();
+
+        metadata.getMetadataQueryRegistro().setId(getIntegerValue(queryMap, "id"));
+        metadata.getMetadataQueryRegistro().setCodigo(getStringValue(queryMap, "codigo"));
+        metadata.getMetadataQueryRegistro().setNombre(getStringValue(queryMap, "nombre"));
+        metadata.getMetadataQueryRegistro().setDescripcion(getStringValue(queryMap, "descripcion"));
+        metadata.getMetadataQueryRegistro().setCategoria(getStringValue(queryMap, "categoria"));
+        metadata.getMetadataQueryRegistro().setActiva(getBooleanValue(queryMap, "activa"));
+        metadata.getMetadataQueryRegistro().setEsConsolidable(getBooleanValue(queryMap, "esConsolidable"));
+        metadata.getMetadataQueryRegistro().setEstado(getStringValue(queryMap, "estado"));
 
         return metadata;
     }
@@ -464,7 +611,7 @@ public class DatabaseQueryServiceImpl implements DatabaseQueryService {
 
         // Metadata de query
         MetadataQuery metadataQuery = new MetadataQuery();
-        metadataQuery.setCodigoQuery(codigoQuery);
+        metadataQuery.setCodigo(codigoQuery);
         metadataQuery.setFechaEjecucion(LocalDateTime.now());
         queryResponse.setQuery(metadataQuery);
 

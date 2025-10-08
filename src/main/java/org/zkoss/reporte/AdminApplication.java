@@ -21,7 +21,7 @@ import java.util.EnumSet;
 @SpringBootApplication
 @ComponentScan(basePackages = {
         "org.zkoss.reporte",
-        "org.zkoss.reporte.web.viewmodel",
+        "org.zkoss.reporte.viewmodel",
         "org.zkoss.reporte.service"
 })
 public class AdminApplication extends SpringBootServletInitializer {

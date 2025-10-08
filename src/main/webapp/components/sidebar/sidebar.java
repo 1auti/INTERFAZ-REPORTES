@@ -1,12 +1,9 @@
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.zkoss.reporte.core.dto.response.MetadataQuery;
 import org.zkoss.reporte.core.dto.response.MetadataQueryRegistro;
 import org.zkoss.reporte.core.service.interfaces.DatabaseQueryService;
 import org.zkoss.reporte.web.navigation.NavigationFactory;
@@ -14,11 +11,9 @@ import org.zkoss.reporte.web.navigation.NavigationMenu;
 import org.zkoss.reporte.web.navigation.NavigationService;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.*;
-import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
-import org.zkoss.zk.ui.select.annotation.WireVariable;
 
 import javax.servlet.ServletContext;
 import java.util.ArrayList;
@@ -39,12 +34,13 @@ public class sidebar {
     private List<NavigationMenu> menuList;
     private List<NavigationMenu> dashboardMenus = new ArrayList<>();
     private List<NavigationMenu> pageMenus = new ArrayList<>();
-    private List<MetadataQueryRegistro> queriesDisponibles = new ArrayList<>();
+    private List<MetadataQuery> queriesDisponibles = new ArrayList<>();
 
     public String interfazTitle = "";
 
     // Variable para tracking del menú activo
     private NavigationMenu activeMenu;
+
 
     @Init
     public void init(@ContextParam(ContextType.DESKTOP) Desktop desktop) {
@@ -130,11 +126,11 @@ public class sidebar {
         // Crear submenús para cada query
         List<NavigationMenu> subMenusQueries = new ArrayList<>();
 
-        for (MetadataQueryRegistro query : queriesDisponibles) {
+        for (MetadataQuery query : queriesDisponibles) {
             NavigationMenu submenu = new NavigationMenu();
             submenu.setLabel(query.getNombre());
             submenu.setIcon(obtenerIconoQuery(query));
-            submenu.setPath("/pages/reportes/ejecutar_query.zul?codigo=" + query.getCodigo());
+            submenu.setPath("/pages/reporte/ejecutar_query.zul?codigo=" + query.getCodigo());
             submenu.setQueryCodigo(query.getCodigo()); // Guardar código para referencia
 
             subMenusQueries.add(submenu);
@@ -163,14 +159,14 @@ public class sidebar {
     /**
      * Determina el icono según el tipo de query
      */
-    private String obtenerIconoQuery(MetadataQueryRegistro query) {
+    private String obtenerIconoQuery(MetadataQuery query) {
         if (query.getEsConsolidable() != null && query.getEsConsolidable()) {
             return "fas fa-layer-group icon-submenu-color";
         }
 
         // Iconos según categoría
-        if (query.getCatergoria() != null) {
-            switch (query.getCatergoria().toUpperCase()) {
+        if (query.getCategoria() != null) {
+            switch (query.getCategoria().toUpperCase()) {
                 case "INFRACCIONES":
                     return "fas fa-exclamation-triangle icon-submenu-color";
                 case "VEHICULOS":

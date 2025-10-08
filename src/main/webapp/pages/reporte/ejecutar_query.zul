@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+    <style src="/pages/reporte/ejecutar_query.css" />
+
+    <div width="100%" viewModel="@id('vm') @init('reporte.ejecutar_query')"
+         sclass="ejecutar-query-container">
+
+        <!-- Loading Overlay -->
+        <div sclass="loading-overlay" visible="@load(vm.ejecutando)">
+            <div sclass="loading-content">
+                <div sclass="loading-spinner"></div>
+                <div sclass="loading-text">Ejecutando consulta...</div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div sclass="query-header">
+            <n:h2>
+                <label sclass="query-label" value= "@load(vm.queryNombre)" />
+                <span sclass="query-badge badge-consolidable"
+                      visible="@load(vm.queryConsolidable)">
+                    Consolidable
+                </span>
+                <div sclass="query-badge badge-categoria"
+                      visible="@bind(vm.categoria ne null)">
+                     <label value="@load(vm.categoria)" />
+                </div>
+            </n:h2>
+            <n:p class="query-description">
+                <label value="@load(vm.queryDescripcion)" /> </n:p>
+        </div>
+
+        <!-- Filtros -->
+        <div sclass="filtros-section" visible="@load(vm.mostrarFiltros)">
+            <groupbox>
+                <caption label="Filtros de Consulta"
+                         iconSclass="fas fa-filter" />
+                <grid>
+                    <columns>
+                        <column width="150px" />
+                        <column />
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="Provincia:" />
+                            <combobox value="@bind(vm.filtros.provincia)"
+                                      width="200px"
+                                      placeholder="Seleccione provincia...">
+                                <comboitem label="Buenos Aires" />
+                                <comboitem label="Córdoba" />
+                                <comboitem label="Santa Fe" />
+                                <comboitem label="Mendoza" />
+                            </combobox>
+                        </row>
+                        <row>
+                            <label value="Fecha Desde:" />
+                            <datebox value="@bind(vm.fechaDesde)"
+                                     format="dd/MM/yyyy"
+                                     placeholder="Seleccione fecha..." />
+                        </row>
+                        <row>
+                            <label value="Fecha Hasta:" />
+                            <datebox value="@bind(vm.fechaHasta)"
+                                     format="dd/MM/yyyy"
+                                     placeholder="Seleccione fecha..." />
+                        </row>
+                    </rows>
+                </grid>
+            </groupbox>
+        </div>
+
+        <!-- Botones de acción -->
+        <div sclass="acciones">
+            <button label="Ejecutar"
+                    iconSclass="fas fa-play"
+                    onClick="@command('ejecutarQuery')"
+                    disabled="@load(vm.ejecutando)" />
+            <button label="Exportar Excel"
+                    iconSclass="fas fa-file-excel"
+                    onClick="@command('exportarExcel')"
+                    disabled="@load(!vm.hayResultados)" />
+            <button label="Limpiar"
+                    iconSclass="fas fa-eraser"
+                    onClick="@command('limpiar')" />
+        </div>
+
+        <!-- Resultados -->
+        <div sclass="resultados-section" visible="@load(vm.hayResultados)">
+            <div sclass="resultados-header">
+                <n:span>
+                    <n:i class="fas fa-table"></n:i>
+                    Total de registros: @load(vm.totalRegistros)
+                </n:span>
+                <n:span>
+                    <n:i class="fas fa-clock"></n:i>
+                    Tiempo: @load(vm.tiempoEjecucion)
+                </n:span>
+            </div>
+
+            <listbox model="@load(vm.resultados)" height="500px" mold="paging" pageSize="50">
+                <listhead>
+                    <listheader forEach="@load(vm.columnasResultado)"
+                                label="@load(each)"
+                                sort="auto(${each})" />
+                </listhead>
+                <template name="model" var="item">
+                    <listitem>
+                        <listcell forEach="@load(vm.columnasResultado)"
+                                  label="@load(item[each])" />
+                    </listitem>
+                </template>
+            </listbox>
+        </div>
+
+        <!-- Empty State -->
+        <div sclass="empty-state" visible="@load(!vm.hayResultados and !vm.ejecutando)">
+            <n:i class="fas fa-search"></n:i>
+            <n:h3>No hay resultados</n:h3>
+            <n:p>Ejecute la consulta para ver los resultados</n:p>
+        </div>
+
+    </div>
+</zk>

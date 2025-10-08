@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.*;
+import org.zkoss.reporte.core.dto.response.MetadataQuery;
 import org.zkoss.reporte.core.model.ActividadItem;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zk.ui.Executions;
@@ -54,7 +55,7 @@ public class home {
     // ===== QUERIES POPULARES =====
 
     @Getter @Setter
-    private List<MetadataQueryRegistro> queriesPopulares = new ArrayList<>();
+    private List<MetadataQuery> queriesPopulares = new ArrayList<>();
 
     // ===== INICIALIZACIÓN =====
 
@@ -189,103 +190,103 @@ public class home {
     @Command
     @NotifyChange("*")
     public void navegarNuevaConsulta() {
-        navigateUsingService("/pages/reportes/nueva_consulta.zul", "Nueva Consulta");
+        navigateUsingService("/pages/reporte/nueva_consulta.zul", "Nueva Consulta");
     }
 
     @Command
     @NotifyChange("*")
     public void navegarUltimaConsulta() {
-        navigateUsingService("/pages/reportes/ultima_consulta.zul", "Última Consulta");
+        navigateUsingService("/pages/reporte/ultima_consulta.zul", "Última Consulta");
     }
 
     @Command
     @NotifyChange("*")
     public void navegarExportar() {
-        navigateUsingService("/pages/reportes/exportar.zul", "Exportar Datos");
+        navigateUsingService("/pages/reporte/exportar.zul", "Exportar Datos");
     }
 
     @Command
     @NotifyChange("*")
     public void navegarDashboard() {
-        navigateUsingService("/pages/reportes/dashboard.zul", "Dashboard");
+        navigateUsingService("/pages/reporte/dashboard.zul", "Dashboard");
     }
 
     @Command
     @NotifyChange("*")
     public void navegarGestionQueries() {
-        navigateUsingService("/pages/reportes/gestion_queries.zul", "Gestión de Queries");
+        navigateUsingService("/pages/reporte/gestion_queries.zul", "Gestión de Queries");
     }
 
     @Command
     @NotifyChange("*")
     public void navegarAyuda() {
-        navigateUsingService("/pages/reportes/ayuda.zul", "Centro de Ayuda");
+        navigateUsingService("/pages/reporte/ayuda.zul", "Centro de Ayuda");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateConsultasDinamicas() {
-        navigateUsingService("/pages/reportes/consultas_dinamicas.zul", "Consultas Dinámicas");
+        navigateUsingService("/pages/reporte/consultas_dinamicas.zul", "Consultas Dinámicas");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateReportesInfracciones() {
-        navigateUsingService("/pages/reportes/infracciones.zul", "Infracciones");
+        navigateUsingService("/pages/reporte/infracciones.zul", "Infracciones");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateDashboard() {
-        navigateUsingService("/pages/reportes/dashboard.zul", "Dashboard");
+        navigateUsingService("/pages/reporte/dashboard.zul", "Dashboard");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateConsolidacion() {
-        navigateUsingService("/pages/reportes/consolidacion.zul", "Consolidación");
+        navigateUsingService("/pages/reporte/consolidacion.zul", "Consolidación");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateExportar() {
-        navigateUsingService("/pages/reportes/exportar.zul", "Exportar Datos");
+        navigateUsingService("/pages/reporte/exportar.zul", "Exportar Datos");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateGestionQueries() {
-        navigateUsingService("/pages/reportes/gestion_queries.zul", "Gestión de Queries");
+        navigateUsingService("/pages/reporte/gestion_queries.zul", "Gestión de Queries");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateAnalisisTemporal() {
-        navigateUsingService("/pages/reportes/analisis_temporal.zul", "Análisis Temporal");
+        navigateUsingService("/pages/reporte/analisis_temporal.zul", "Análisis Temporal");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateAnalisisGeografico() {
-        navigateUsingService("/pages/reportes/analisis_geografico.zul", "Análisis Geográfico");
+        navigateUsingService("/pages/reporte/analisis_geografico.zul", "Análisis Geográfico");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateHistorial() {
-        navigateUsingService("/pages/reportes/historial.zul", "Historial de Reportes");
+        navigateUsingService("/pages/reporte/historial.zul", "Historial de Reportes");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateConsultaRapida() {
-        navigateUsingService("/pages/reportes/consulta_rapida.zul", "Consulta Rápida");
+        navigateUsingService("/pages/reporte/consulta_rapida.zul", "Consulta Rápida");
     }
 
     @Command
     @NotifyChange("*")
     public void navigateAyuda() {
-        navigateUsingService("/pages/reportes/ayuda.zul", "Centro de Ayuda");
+        navigateUsingService("/pages/reporte/ayuda.zul", "Centro de Ayuda");
     }
 
     // ===== COMANDO PARA EJECUTAR QUERY DESDE POPULARES =====
@@ -297,7 +298,7 @@ public class home {
             System.out.println("Ejecutando query popular: " + query.getNombre());
             // Navegar a la página de ejecución con el código de la query
             navigateUsingService(
-                    "/pages/reportes/ejecutar_query.zul?codigo=" + query.getCodigo(),
+                    "/pages/reporte/ejecutar_query.zul?codigo=" + query.getCodigo(),
                     "Ejecutar: " + query.getNombre()
             );
         }

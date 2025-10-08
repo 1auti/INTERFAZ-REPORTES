@@ -18,7 +18,8 @@ public class MetadataQueryRegistro{
     private String nombre;
     private String codigo;
     private String descripcion;
-    private String catergoria;
+    private String sqlQuery;
+    private String categoria;
     private Boolean activa;
     private Boolean esConsolidable;
     private String estado;
