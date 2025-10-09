@@ -16,18 +16,154 @@
         <!-- Header -->
         <div sclass="query-header">
             <n:h2>
-                <label sclass="query-label" value= "@load(vm.queryNombre)" />
+                <label sclass="query-label" value="@load(vm.queryNombre)" />
                 <span sclass="query-badge badge-consolidable"
                       visible="@load(vm.queryConsolidable)">
                     Consolidable
                 </span>
                 <div sclass="query-badge badge-categoria"
-                      visible="@bind(vm.categoria ne null)">
-                     <label value="@load(vm.categoria)" />
+                     visible="@bind(vm.categoria ne null)">
+                    <label value="@load(vm.categoria)" />
                 </div>
             </n:h2>
             <n:p class="query-description">
-                <label value="@load(vm.queryDescripcion)" /> </n:p>
+                <label value="@load(vm.queryDescripcion)" />
+            </n:p>
+        </div>
+
+        <!-- SECCIÓN: Detalles de la Query -->
+        <div sclass="query-details-section" visible="@load(vm.queryMetadata ne null)">
+            <groupbox>
+                <caption label="Detalles de la Query" iconSclass="fas fa-info-circle" />
+
+                <!-- SQL Query -->
+                <div sclass="detail-row">
+                    <label value="SQL:" sclass="detail-label" />
+                    <textbox value="@load(vm.queryMetadata.sqlQuery)"
+                             rows="5"
+                             width="100%"
+                             readonly="true"
+                             sclass="sql-textbox" />
+                </div>
+
+                <!-- Información de Consolidación -->
+                <div visible="@load(vm.queryConsolidable)" sclass="consolidacion-container">
+                    <separator />
+                    <n:h3 class="consolidacion-title">
+                        <n:i class="fas fa-compress-alt"></n:i> Configuración de Consolidación
+                    </n:h3>
+
+                    <!-- ⭐ CAMPOS DE AGRUPACIÓN ⭐ -->
+                    <!-- ⭐ CAMPOS DE AGRUPACIÓN ⭐ -->
+                    <div sclass="detail-row">
+                        <label value="Campos de Agrupación:" sclass="detail-label" />
+                        <div sclass="campos-container">
+                            <listbox model="@load(vm.camposAgrupacion)"
+                                     visible="@load(not empty vm.camposAgrupacion)"
+                                     sclass="campos-listbox">
+                                <template name="model">
+                                    <listitem sclass="campo-item">
+                                        <listcell sclass="campo-cell">
+                                            <label value="@load(each)"
+                                                   sclass="campo-badge badge-agrupacion" />
+                                        </listcell>
+                                    </listitem>
+                                </template>
+                            </listbox>
+
+                            <label value="No definidos"
+                                   visible="@load(empty vm.camposAgrupacion)"
+                                   sclass="no-data-label" />
+                        </div>
+                    </div>
+
+                    <!-- ⭐ CAMPOS NUMÉRICOS ⭐ -->
+                    <div sclass="detail-row">
+                        <label value="Campos Numéricos:" sclass="detail-label" />
+                        <div sclass="campos-container">
+                            <listbox model="@load(vm.camposNumericos)"
+                                     visible="@load(not empty vm.camposNumericos)"
+                                     sclass="campos-listbox">
+                                <template name="model">
+                                    <listitem sclass="campo-item">
+                                        <listcell sclass="campo-cell">
+                                            <label value="@load(each)"
+                                                   sclass="campo-badge badge-numerico" />
+                                        </listcell>
+                                    </listitem>
+                                </template>
+                            </listbox>
+
+                            <label value="No definidos"
+                                   visible="@load(empty vm.camposNumericos)"
+                                   sclass="no-data-label" />
+                        </div>
+                    </div>
+
+                    <!-- ⭐ CAMPOS DE UBICACIÓN ⭐ -->
+                    <div sclass="detail-row">
+                        <label value="Campos de Ubicación:" sclass="detail-label" />
+                        <div sclass="campos-container">
+                            <listbox model="@load(vm.camposUbicacion)"
+                                     visible="@load(not empty vm.camposUbicacion)"
+                                     sclass="campos-listbox">
+                                <template name="model">
+                                    <listitem sclass="campo-item">
+                                        <listcell sclass="campo-cell">
+                                            <label value="@load(each)"
+                                                   sclass="campo-badge badge-ubicacion" />
+                                        </listcell>
+                                    </listitem>
+                                </template>
+                            </listbox>
+
+                            <label value="No definidos"
+                                   visible="@load(empty vm.camposUbicacion)"
+                                   sclass="no-data-label" />
+                        </div>
+                    </div>
+
+                    <!-- ⭐ CAMPOS DE TIEMPO ⭐ -->
+                    <div sclass="detail-row">
+                        <label value="Campos de Tiempo:" sclass="detail-label" />
+                        <div sclass="campos-container">
+                            <listbox model="@load(vm.camposTiempo)"
+                                     visible="@load(not empty vm.camposTiempo)"
+                                     sclass="campos-listbox">
+                                <template name="model">
+                                    <listitem sclass="campo-item">
+                                        <listcell sclass="campo-cell">
+                                            <label value="@load(each)"
+                                                   sclass="campo-badge badge-tiempo" />
+                                        </listcell>
+                                    </listitem>
+                                </template>
+                            </listbox>
+
+                            <label value="No definidos"
+                                   visible="@load(empty vm.camposTiempo)"
+                                   sclass="no-data-label" />
+                        </div>
+                    </div>
+
+                    <separator />
+
+                    <!-- Contador de Usos -->
+                    <div sclass="detail-row">
+                        <label value="Veces Ejecutada:" sclass="detail-label" />
+                        <label value="@load(vm.queryMetadata.contadorUsos)"
+                               sclass="detail-value" />
+                    </div>
+
+                    <!-- Fechas -->
+                    <div sclass="detail-row">
+                        <label value="Fecha Creación:" sclass="detail-label" />
+                        <label value="@load(vm.queryMetadata.fechaCreacion)"
+                               sclass="detail-value" />
+                    </div>
+                </div>
+
+            </groupbox>
         </div>
 
         <!-- Filtros -->
@@ -89,11 +225,11 @@
             <div sclass="resultados-header">
                 <n:span>
                     <n:i class="fas fa-table"></n:i>
-                    Total de registros: @load(vm.totalRegistros)
+                    Total de registros: <label value="@load(vm.totalRegistros)" />
                 </n:span>
                 <n:span>
                     <n:i class="fas fa-clock"></n:i>
-                    Tiempo: @load(vm.tiempoEjecucion)
+                    Tiempo: <label value="@load(vm.tiempoEjecucion)" />
                 </n:span>
             </div>
 

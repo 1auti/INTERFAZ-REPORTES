@@ -410,3 +410,223 @@
         background: #94a3b8;
     }
 
+    /* Sección de Detalles de Query */
+    .query-details-section {
+        margin: 20px 0;
+    }
+
+    .query-details-section .z-groupbox {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: #f9f9f9;
+    }
+
+    /* SQL Textbox */
+    .sql-textbox {
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        background-color: #2d2d2d !important;
+        color: #f8f8f2 !important;
+        border: 1px solid #555;
+        border-radius: 4px;
+        padding: 12px;
+        line-height: 1.5;
+    }
+
+    /* Detail Rows */
+    .detail-row {
+        margin: 15px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .detail-value {
+        color: #666;
+        font-size: 13px;
+    }
+
+    /* Título de Consolidación */
+    .consolidacion-title {
+        font-size: 16px;
+        color: #2196F3;
+        margin: 15px 0 10px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Lista de Campos */
+    .campos-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    /* Badges de Campos */
+    .campo-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .badge-agrupacion {
+        background-color: #E3F2FD;
+        color: #1976D2;
+        border: 1px solid #90CAF9;
+    }
+
+    .badge-numerico {
+        background-color: #F3E5F5;
+        color: #7B1FA2;
+        border: 1px solid #CE93D8;
+    }
+
+    .badge-ubicacion {
+        background-color: #E8F5E9;
+        color: #388E3C;
+        border: 1px solid #A5D6A7;
+    }
+
+    .badge-tiempo {
+        background-color: #FFF3E0;
+        color: #F57C00;
+        border: 1px solid #FFCC80;
+    }
+
+    /* Separador */
+    .query-details-section .z-separator {
+        margin: 20px 0;
+        border-color: #ddd;
+    }
+
+    /* Sección de Detalles de Query */
+    .query-details-section {
+        margin: 20px 0;
+    }
+
+    .query-details-section .z-groupbox {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: #f9f9f9;
+    }
+
+    .query-details-section .z-groupbox-content {
+        padding: 20px;
+    }
+
+    /* SQL Textbox */
+    .sql-textbox {
+        font-family: 'Courier New', monospace !important;
+        font-size: 12px !important;
+        background-color: #2d2d2d !important;
+        color: #f8f8f2 !important;
+        border: 1px solid #555 !important;
+        border-radius: 4px !important;
+        padding: 12px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Detail Rows */
+    .detail-row {
+        margin: 15px 0;
+        display: block;
+    }
+
+    .detail-label {
+        font-weight: 600 !important;
+        color: #333 !important;
+        font-size: 14px !important;
+        display: block !important;
+        margin-bottom: 8px !important;
+    }
+
+    .detail-value {
+        color: #666 !important;
+        font-size: 13px !important;
+        display: block !important;
+    }
+
+    /* Título de Consolidación */
+    .consolidacion-title {
+        font-size: 16px !important;
+        color: #2196F3 !important;
+        margin: 15px 0 10px 0 !important;
+        font-weight: 600 !important;
+    }
+
+    .consolidacion-title i {
+        margin-right: 8px;
+    }
+
+    /* Contenedor de Consolidación */
+    .consolidacion-container {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 15px;
+    }
+
+    /* Lista de Campos */
+    .campos-list {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        margin-top: 5px !important;
+    }
+
+    /* Badges de Campos */
+    .campo-badge {
+        display: inline-block !important;
+        padding: 6px 12px !important;
+        border-radius: 4px !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        white-space: nowrap !important;
+    }
+
+    .badge-agrupacion {
+        background-color: #E3F2FD !important;
+        color: #1976D2 !important;
+        border: 1px solid #90CAF9 !important;
+    }
+
+    .badge-numerico {
+        background-color: #F3E5F5 !important;
+        color: #7B1FA2 !important;
+        border: 1px solid #CE93D8 !important;
+    }
+
+    .badge-ubicacion {
+        background-color: #E8F5E9 !important;
+        color: #388E3C !important;
+        border: 1px solid #A5D6A7 !important;
+    }
+
+    .badge-tiempo {
+        background-color: #FFF3E0 !important;
+        color: #F57C00 !important;
+        border: 1px solid #FFCC80 !important;
+    }
+
+    /* Separador */
+    .query-details-section .z-separator {
+        margin: 20px 0 !important;
+        border-color: #ddd !important;
+    }
+
+    /* Asegurar que los labels tengan display inline-block */
+    .campos-list .z-label {
+        display: inline-block !important;
+    }
+
+
+
