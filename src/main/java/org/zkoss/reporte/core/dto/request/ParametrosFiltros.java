@@ -25,6 +25,8 @@ public class ParametrosFiltros {
     private List<String> consolidacion;
     private String periodoTemporal;
 
+    private boolean usarTodasLasBDS;
+
     // Paginación
     private Integer pagina;
     private Integer tamanoPagina;

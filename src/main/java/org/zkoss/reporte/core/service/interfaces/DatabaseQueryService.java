@@ -6,7 +6,6 @@ import java.util.Map;
 import org.zkoss.reporte.core.dto.request.ConsultaQuery;
 import org.zkoss.reporte.core.dto.request.Query;
 import org.zkoss.reporte.core.dto.response.MetadataQuery;
-import org.zkoss.reporte.core.dto.response.MetadataQueryRegistro;
 import org.zkoss.reporte.core.dto.response.MetadataRegistroQuery;
 import org.zkoss.reporte.core.dto.response.QueryResponse;
 

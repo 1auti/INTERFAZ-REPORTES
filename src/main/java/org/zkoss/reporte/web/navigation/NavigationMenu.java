@@ -11,9 +11,10 @@ public class NavigationMenu {
     private String path;
     private Integer counter;
     private boolean expanded;
+    private boolean active;
     private List<NavigationMenu> subMenus;
 
-    // ===== NUEVO =====
+
     private String queryCodigo; // Código de la query asociada
 
     public NavigationMenu() {

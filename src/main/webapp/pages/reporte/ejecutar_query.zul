@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <!-- Header -->
+        <!-- ===== HEADER ===== -->
         <div sclass="query-header">
             <n:h2>
                 <label sclass="query-label" value="@load(vm.queryNombre)" />
@@ -31,7 +31,7 @@
             </n:p>
         </div>
 
-        <!-- SECCIÓN: Detalles de la Query -->
+        <!-- ===== SECCIÓN: DETALLES DE LA QUERY ===== -->
         <div sclass="query-details-section" visible="@load(vm.queryMetadata ne null)">
             <groupbox>
                 <caption label="Detalles de la Query" iconSclass="fas fa-info-circle" />
@@ -53,8 +53,7 @@
                         <n:i class="fas fa-compress-alt"></n:i> Configuración de Consolidación
                     </n:h3>
 
-                    <!-- ⭐ CAMPOS DE AGRUPACIÓN ⭐ -->
-                    <!-- ⭐ CAMPOS DE AGRUPACIÓN ⭐ -->
+                    <!-- CAMPOS DE AGRUPACIÓN -->
                     <div sclass="detail-row">
                         <label value="Campos de Agrupación:" sclass="detail-label" />
                         <div sclass="campos-container">
@@ -77,7 +76,7 @@
                         </div>
                     </div>
 
-                    <!-- ⭐ CAMPOS NUMÉRICOS ⭐ -->
+                    <!-- CAMPOS NUMÉRICOS -->
                     <div sclass="detail-row">
                         <label value="Campos Numéricos:" sclass="detail-label" />
                         <div sclass="campos-container">
@@ -100,7 +99,7 @@
                         </div>
                     </div>
 
-                    <!-- ⭐ CAMPOS DE UBICACIÓN ⭐ -->
+                    <!-- CAMPOS DE UBICACIÓN -->
                     <div sclass="detail-row">
                         <label value="Campos de Ubicación:" sclass="detail-label" />
                         <div sclass="campos-container">
@@ -123,7 +122,7 @@
                         </div>
                     </div>
 
-                    <!-- ⭐ CAMPOS DE TIEMPO ⭐ -->
+                    <!-- CAMPOS DE TIEMPO -->
                     <div sclass="detail-row">
                         <label value="Campos de Tiempo:" sclass="detail-label" />
                         <div sclass="campos-container">
@@ -166,93 +165,273 @@
             </groupbox>
         </div>
 
-        <!-- Filtros -->
+        <!-- ===== SECCIÓN: FILTROS ===== -->
         <div sclass="filtros-section" visible="@load(vm.mostrarFiltros)">
             <groupbox>
-                <caption label="Filtros de Consulta"
-                         iconSclass="fas fa-filter" />
-                <grid>
-                    <columns>
-                        <column width="150px" />
-                        <column />
-                    </columns>
-                    <rows>
-                        <row>
-                            <label value="Provincia:" />
-                            <combobox value="@bind(vm.filtros.provincia)"
-                                      width="200px"
-                                      placeholder="Seleccione provincia...">
-                                <comboitem label="Buenos Aires" />
-                                <comboitem label="Córdoba" />
-                                <comboitem label="Santa Fe" />
-                                <comboitem label="Mendoza" />
-                            </combobox>
-                        </row>
-                        <row>
-                            <label value="Fecha Desde:" />
-                            <datebox value="@bind(vm.fechaDesde)"
-                                     format="dd/MM/yyyy"
-                                     placeholder="Seleccione fecha..." />
-                        </row>
-                        <row>
-                            <label value="Fecha Hasta:" />
-                            <datebox value="@bind(vm.fechaHasta)"
-                                     format="dd/MM/yyyy"
-                                     placeholder="Seleccione fecha..." />
-                        </row>
-                    </rows>
-                </grid>
+                <caption label="Filtros de Consulta" iconSclass="fas fa-filter" />
+                <vlayout spacing="10px">
+
+                    <!-- Provincia -->
+                    <div sclass="filtro-row">
+                        <label value="Provincia:" sclass="filtro-label" />
+                        <combobox value="@bind(vm.filtros.provincia)"
+                                  width="250px"
+                                  placeholder="Seleccione provincia...">
+                            <comboitem label="Buenos Aires" />
+                            <comboitem label="Avellaneda" />
+                            <comboitem label="Formosa" />
+                            <comboitem label="Entre Ríos" />
+                            <comboitem label="La Pampa" />
+                        </combobox>
+                    </div>
+
+                    <!-- Fecha Desde -->
+                    <div sclass="filtro-row">
+                        <label value="Fecha Desde:" sclass="filtro-label" />
+                        <datebox value="@bind(vm.fechaDesde)"
+                                 format="dd/MM/yyyy"
+                                 width="200px"
+                                 placeholder="Seleccione fecha..." />
+                    </div>
+
+                    <!-- Fecha Hasta -->
+                    <div sclass="filtro-row">
+                        <label value="Fecha Hasta:" sclass="filtro-label" />
+                        <datebox value="@bind(vm.fechaHasta)"
+                                 format="dd/MM/yyyy"
+                                 width="200px"
+                                 placeholder="Seleccione fecha..." />
+                    </div>
+
+                    <separator bar="true" />
+
+                    <!-- ===== FILTROS DE CONSOLIDACIÓN ===== -->
+
+                    <!-- Checkbox para activar consolidación -->
+                    <div sclass="filtro-row" visible="@load(vm.queryConsolidable)">
+                        <label value="Consolidado:" sclass="filtro-label" />
+                        <checkbox checked="@bind(vm.consolidado)"
+                                  onCheck="@command('onConsolidadoChange')"
+                                  label="Activar modo consolidación" />
+                    </div>
+
+                    <!-- Campos de Agrupación -->
+                    <div sclass="filtro-row" visible="@load(vm.queryConsolidable and vm.consolidado)">
+                        <label value="Campos de Agrupación:" sclass="filtro-label" />
+                        <vlayout spacing="5px">
+                            <listbox model="@load(vm.camposAgrupacion)"
+                                     checkmark="true"
+                                     multiple="true"
+                                     selectedItems="@bind(vm.camposAgrupacionSeleccionados)"
+                                     width="450px"
+                                     height="120px"
+                                     sclass="campos-selection-listbox">
+                                <listhead>
+                                    <listheader label="Campos de Agrupación Disponibles" />
+                                </listhead>
+                                <template name="model" var="campo">
+                                    <!-- ⭐ CORRECCIÓN: Agregar value="@load(campo)" -->
+                                    <listitem value="@load(campo)" label="@load(campo)">
+                                        <listcell>
+                                            <label value="@load(campo)"
+                                                   sclass="campo-badge badge-agrupacion" />
+                                        </listcell>
+                                    </listitem>
+                                </template>
+                            </listbox>
+                            <label value="@load(empty vm.camposAgrupacion ? 'No hay campos disponibles' : 'Seleccione uno o más campos')"
+                                   sclass="help-text"
+                                   style="font-size: 11px; color: #666;" />
+                        </vlayout>
+                    </div>
+
+                    <!-- Campos Numéricos -->
+                    <div sclass="filtro-row" visible="@load(vm.queryConsolidable and vm.consolidado)">
+                        <label value="Campos a agregar:" sclass="filtro-label" />
+                        <vlayout spacing="5px">
+                            <listbox model="@load(vm.camposNumericos)"
+                                     checkmark="true"
+                                     multiple="true"
+                                     selectedItems="@bind(vm.camposNumericosSeleccionados)"
+                                     width="450px"
+                                     height="120px"
+                                     sclass="campos-selection-listbox">
+                                <listhead>
+                                    <listheader label="Campos Numéricos para Agregación" />
+                                </listhead>
+                                <template name="model" var="campo">
+                                    <!-- ⭐ CORRECCIÓN: Agregar value="@load(campo)" -->
+                                    <listitem value="@load(campo)" label="@load(campo)">
+                                        <listcell>
+                                            <label value="@load(campo)"
+                                                   sclass="campo-badge badge-numerico" />
+                                        </listcell>
+                                    </listitem>
+                                </template>
+                            </listbox>
+                            <label value="@load(empty vm.camposNumericos ? 'No hay campos disponibles' : 'Seleccione campos para aplicar funciones')"
+                                   sclass="help-text"
+                                   style="font-size: 11px; color: #666;" />
+                        </vlayout>
+                    </div>
+
+                    <!-- Campos de Ubicación -->
+                    <div sclass="filtro-row" visible="@load(vm.queryConsolidable and vm.consolidado)">
+                        <label value="Campos de Ubicación:" sclass="filtro-label" />
+                        <vlayout spacing="5px">
+                            <listbox model="@load(vm.camposUbicacion)"
+                                     checkmark="true"
+                                     multiple="true"
+                                     selectedItems="@bind(vm.camposUbicacionSeleccionados)"
+                                     width="450px"
+                                     height="120px"
+                                     sclass="campos-selection-listbox">
+                                <listhead>
+                                    <listheader label="Campos de Ubicación Disponibles" />
+                                </listhead>
+                                <template name="model" var="campo">
+                                    <!-- ⭐ CORRECCIÓN: Agregar value="@load(campo)" -->
+                                    <listitem value="@load(campo)" label="@load(campo)">
+                                        <listcell>
+                                            <label value="@load(campo)"
+                                                   sclass="campo-badge badge-ubicacion" />
+                                        </listcell>
+                                    </listitem>
+                                </template>
+                            </listbox>
+                            <label value="@load(empty vm.camposUbicacion ? 'No hay campos disponibles' : 'Seleccione uno o más campos')"
+                                   sclass="help-text"
+                                   style="font-size: 11px; color: #666;" />
+                        </vlayout>
+                    </div>
+
+                    <!-- Campos de Tiempo -->
+                    <div sclass="filtro-row" visible="@load(vm.queryConsolidable and vm.consolidado)">
+                        <label value="Campos de Tiempo:" sclass="filtro-label" />
+                        <vlayout spacing="5px">
+                            <listbox model="@load(vm.camposTiempo)"
+                                     checkmark="true"
+                                     multiple="true"
+                                     selectedItems="@bind(vm.camposTiempoSeleccionados)"
+                                     width="450px"
+                                     height="120px"
+                                     sclass="campos-selection-listbox">
+                                <listhead>
+                                    <listheader label="Campos de Tiempo Disponibles" />
+                                </listhead>
+                                <template name="model" var="campo">
+                                    <!-- ⭐ CORRECCIÓN: Agregar value="@load(campo)" -->
+                                    <listitem value="@load(campo)" label="@load(campo)">
+                                        <listcell>
+                                            <label value="@load(campo)"
+                                                   sclass="campo-badge badge-tiempo" />
+                                        </listcell>
+                                    </listitem>
+                                </template>
+                            </listbox>
+                            <label value="@load(empty vm.camposTiempo ? 'No hay campos disponibles' : 'Seleccione uno o más campos')"
+                                   sclass="help-text"
+                                   style="font-size: 11px; color: #666;" />
+                        </vlayout>
+                    </div>
+
+
+                </vlayout>
             </groupbox>
         </div>
 
-        <!-- Botones de acción -->
+        <!-- ===== BOTONES DE ACCIÓN ===== -->
         <div sclass="acciones">
-            <button label="Ejecutar"
+            <button label="Ejecutar Consulta"
                     iconSclass="fas fa-play"
                     onClick="@command('ejecutarQuery')"
-                    disabled="@load(vm.ejecutando)" />
-            <button label="Exportar Excel"
+                    disabled="@load(vm.ejecutando)"
+                    sclass="btn-ejecutar" />
+
+            <button label="Exportar a Excel"
                     iconSclass="fas fa-file-excel"
                     onClick="@command('exportarExcel')"
-                    disabled="@load(!vm.hayResultados)" />
-            <button label="Limpiar"
+                    disabled="@load(!vm.hayResultados)"
+                    sclass="btn-exportar" />
+
+            <button label="Limpiar Todo"
                     iconSclass="fas fa-eraser"
-                    onClick="@command('limpiar')" />
+                    onClick="@command('limpiar')"
+                    sclass="btn-limpiar" />
+
+            <button label="Recargar Query"
+                    iconSclass="fas fa-sync-alt"
+                    onClick="@command('recargarQuery')"
+                    sclass="btn-recargar" />
         </div>
 
-        <!-- Resultados -->
+        <!-- ===== SECCIÓN: RESULTADOS ===== -->
         <div sclass="resultados-section" visible="@load(vm.hayResultados)">
-            <div sclass="resultados-header">
-                <n:span>
-                    <n:i class="fas fa-table"></n:i>
-                    Total de registros: <label value="@load(vm.totalRegistros)" />
-                </n:span>
-                <n:span>
-                    <n:i class="fas fa-clock"></n:i>
-                    Tiempo: <label value="@load(vm.tiempoEjecucion)" />
-                </n:span>
-            </div>
 
-            <listbox model="@load(vm.resultados)" height="500px" mold="paging" pageSize="50">
-                <listhead>
-                    <listheader forEach="@load(vm.columnasResultado)"
-                                label="@load(each)"
-                                sort="auto(${each})" />
-                </listhead>
-                <template name="model" var="item">
-                    <listitem>
-                        <listcell forEach="@load(vm.columnasResultado)"
-                                  label="@load(item[each])" />
+            <!-- Header con estadísticas -->
+            <groupbox>
+                <caption label="Resultados de la Consulta" iconSclass="fas fa-table" />
+
+                <hlayout spacing="30px" style="padding: 10px;">
+                    <div>
+                        <label value="📊 Total de registros:"
+                               style="font-weight: 500; margin-right: 5px;" />
+                        <label value="@load(vm.totalRegistros)"
+                               style="font-weight: 700; color: #1976d2; font-size: 18px;" />
+                    </div>
+
+                    <div>
+                        <label value="⏱️ Tiempo de ejecución:"
+                               style="font-weight: 500; margin-right: 5px;" />
+                        <label value="@load(vm.tiempoEjecucion)"
+                               style="font-weight: 700; color: #388e3c;" />
+                    </div>
+
+                    <div>
+                        <label value="📋 Columnas:"
+                               style="font-weight: 500; margin-right: 5px;" />
+                        <label value="@load(vm.columnasResultado.size())"
+                               style="font-weight: 700; color: #f57c00;" />
+                    </div>
+                </hlayout>
+            </groupbox>
+
+            <!-- ⭐ TABLA CON LISTBOX (Solución más robusta) -->
+            <listbox id="listboxResultados"
+                     model="@load(vm.resultados)"
+                     height="500px"
+                     mold="paging"
+                     pageSize="50"
+                     autopaging="true"
+                     emptyMessage="No hay registros para mostrar"
+                     style="margin-top: 10px; border: 1px solid #ddd;">
+
+
+
+                <!-- Filas dinámicas -->
+                <template name="model">
+                    <listitem style="border-bottom: 1px solid #f1f3f5;">
+                        <custom-attributes fila="${each}"/>
+                        <listcell forEach="${vm.columnasResultado}"
+                                  style="padding: 10px 8px; border-right: 1px solid #f1f3f5;">
+                            <label value="${fila[each]}" />
+                        </listcell>
                     </listitem>
                 </template>
             </listbox>
+
         </div>
 
-        <!-- Empty State -->
-        <div sclass="empty-state" visible="@load(!vm.hayResultados and !vm.ejecutando)">
-            <n:i class="fas fa-search"></n:i>
-            <n:h3>No hay resultados</n:h3>
-            <n:p>Ejecute la consulta para ver los resultados</n:p>
+
+        <!-- ===== EMPTY STATE (Sin resultados) ===== -->
+        <div sclass="empty-state" visible="@load(not vm.hayResultados and not vm.ejecutando)">
+            <n:div class="empty-state-icon">
+                <n:i class="fas fa-search"></n:i>
+            </n:div>
+            <n:h3 class="empty-state-title">No hay resultados</n:h3>
+            <n:p class="empty-state-message">
+                Configure los filtros y haga clic en "Ejecutar Consulta" para ver los resultados
+            </n:p>
         </div>
 
     </div>

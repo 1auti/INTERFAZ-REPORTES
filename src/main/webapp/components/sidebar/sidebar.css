@@ -1,27 +1,68 @@
 /* === SIDEBAR === */
 .sidebar {
     color: #ffffff;
-    height: 100vh;
-    width: 230px;
-    max-width: 230px;
+    /* ✅ CAMBIO: min-height en lugar de height fija */
+    min-height: 100vh;
+    height: auto; /* Permite que crezca con el contenido */
+    width: 280px;
+    max-width: 280px;
     position: fixed;
     left: 0;
     top: 0;
+    bottom: 0; /* ✅ NUEVO: Anclar al bottom */
     transition: all 0.3s ease;
-    overflow-y: auto !important; /* Forzar scroll */
+    overflow-y: auto !important;
     overflow-x: hidden;
     background-color: #38393B;
-    padding: 0; /* Sin padding en el contenedor principal */
+    padding: 0;
     box-shadow: 4px 0px 12px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 4px 0px 12px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 4px 0px 12px rgba(0, 0, 0, 0.3);
     z-index: 1000;
 }
 
-/* Contenedor interno con padding */
+/* ✅ Contenedor interno con padding generoso y altura mínima */
 .sidebar > div {
-    min-height: 100%;
-    padding: 20px 0px 100px 10px; /* Padding generoso al final */
+    min-height: calc(100vh + 200px); /* Asegura espacio extra */
+    padding: 20px 0px 250px 10px; /* ✅ Padding más generoso al final */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .menu-container,
+.sidebar > div > div[children] {
+    flex: 1;
+    padding-bottom: 250px !important; /* Espacio extra al final */
+    min-height: auto;
+}
+
+/* Scrollbar mejorada */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background-color: #2d2e30;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #6b7280;
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* ✅ CRÍTICO: Asegurar visibilidad de submenús */
+.submenu {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.submenu.expanded {
+    max-height: 2000px; /* ✅ Valor alto para permitir muchos items */
+    overflow: visible;
 }
 
 @media (max-width: 957px) {
@@ -130,7 +171,7 @@
 
 /* Labels de menú */
 .menu-item .z-label, .menu-label-menu, .menu-label-sub {
-    font-size: 10px;
+    font-size: 14px;
     color: #ffffff;
     white-space: nowrap;
     overflow: hidden;

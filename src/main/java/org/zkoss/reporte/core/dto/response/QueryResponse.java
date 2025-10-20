@@ -15,6 +15,7 @@ import java.util.Map;
 public class QueryResponse {
 
     private List<Map<String, Object>> datos;
+    private List<String> columnas;
     private MetadataPaginacion paginacion;
     private MetadataQuery query;
     private MetadataConsolidacion consolidacion;

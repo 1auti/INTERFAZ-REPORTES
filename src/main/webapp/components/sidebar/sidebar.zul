@@ -14,14 +14,9 @@
                 <image src="/resources/image/logo.jpg" width="120px" sclass="rounded"/>
             </div>
 
-            <!-- Menú principal CON PADDING GENEROSO -->
-            <div children="@load(vm.menuList)" style="padding-bottom: 200px;">
+            <!-- ✅ CRÍTICO: Contenedor de menús sin altura fija -->
+            <div children="@load(vm.menuList)" sclass="menu-container">
                 <template name="children" var="menu">
-
-                    <!-- Título de sección -->
-                    <div if="${!empty menu.title}" sclass="menu-title">
-                        <label value="@load(menu.title)" />
-                    </div>
 
                     <!-- Item de menú principal -->
                     <div sclass="menu-item ${menu.expanded ? 'expanded' : ''}">
@@ -29,8 +24,9 @@
                         <!-- Menú con submenús (expandible) -->
                         <div sclass="menu" if="${!empty menu.subMenus}"
                              onClick="@command('toggleMenu', menu=menu)"
-                             data-title="@load(menu.label)">
-                            <n:span class="${menu.icon} icon"></n:span>
+                             data-title="@load(menu.label)"
+                             tooltip="@load(menu.label)">
+                            <n:span class="${menu.icon} icon icon-menu-color"></n:span>
                             <label sclass="menu-label-menu" value="@load(menu.label)" />
                             <n:span class="fa fa-chevron-right chevron-icon"></n:span>
                         </div>
@@ -39,21 +35,22 @@
                         <div if="${empty menu.subMenus}"
                              onClick="@command('navigate', menu=menu)"
                              sclass="${vm.isMenuActive(menu) ? 'active' : ''}"
-                             data-title="@load(menu.label)">
-                            <n:span class="${menu.icon} icon"></n:span>
+                             tooltip="@load(menu.label)">
+                            <n:span class="${menu.icon} icon icon-menu-color"></n:span>
                             <label value="@load(menu.label)" />
                         </div>
                     </div>
 
-                    <!-- SUBMENÚS -->
-                    <div sclass="submenu ${menu.expanded ? 'expanded' : ''}"
-                         visible="@load(menu.expanded)">
+                    <!-- ✅ SUBMENÚS con if en lugar de visible -->
+                    <div if="${menu.expanded}"
+                         sclass="submenu expanded">
                         <div children="@load(menu.subMenus)">
                             <template name="children" var="submenu">
                                 <div sclass="menu-item ${vm.isMenuActive(submenu) ? 'active' : ''}"
                                      onClick="@command('navigate', menu=submenu)"
-                                     data-title="@load(submenu.label)">
-                                    <n:span class="${submenu.icon} icon"></n:span>
+                                     data-title="@load(submenu.label)"
+                                     tooltip="@load(submenu.label)">
+                                    <n:span class="${submenu.icon} icon icon-submenu-color"></n:span>
                                     <label sclass="menu-label-sub" value="@load(submenu.label)" />
                                 </div>
                             </template>
@@ -63,14 +60,8 @@
                 </template>
             </div>
 
-            <!-- Botón para recargar queries (opcional, útil para desarrollo) -->
-            <div sclass="reload-queries-btn" visible="false">
-                <button onClick="@command('recargarQueries')"
-                        sclass="btn-reload"
-                        iconSclass="fas fa-sync-alt">
-                    Recargar Queries
-                </button>
-            </div>
+            <!-- ✅ Espaciador final para asegurar scroll completo -->
+            <div style="height: 100px; width: 100%;"></div>
         </div>
     </div>
 </zk>
